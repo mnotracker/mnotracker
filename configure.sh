@@ -9,3 +9,5 @@ set -e
 cd_project_dir
 
 ln -sf ../../scripts/pre-commit .git/hooks/pre-commit
+
+sbt exit

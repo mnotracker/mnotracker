@@ -1,7 +1,7 @@
 android.Plugin.androidBuild
 
 // Specifying the Android target Sdk version
-platformTarget in Android := "android-21"
+platformTarget in Android := "android-22"
 
 // Application Name
 name := "mnotracker"
