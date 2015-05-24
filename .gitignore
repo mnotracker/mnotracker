@@ -1,0 +1,28 @@
+*.class
+*.log
+.classpath
+.project
+
+# sbt specific
+.cache/
+.history/
+.lib/
+bin/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+project/target/
+project/project/
+
+# IntelliJ IDEA
+.idea
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+# Android Scala Plugin
+proguard-sbt.txt
