@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MNO-tracker</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="notify_only_bad_news">Only Bad News Notifications</string>
+    <string name="notify_only_bad_news_summary">Price change, new subscription to a paid service, etc.</string>
+    <string name="dark_theme_on">Dark Theme</string>
+    <string name="only_via_wifi">Wi-Fi Only</string>
+    <string name="telemetry_on">Send Telemetry</string>
+    <string name="telemetry_on_summary">Help developers with improving the app</string>
 </resources>

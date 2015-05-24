@@ -1,9 +1,11 @@
-package com.github.mnotracker
+package com.github.mnotracker.activities
 
 import android.app.Activity
-import android.os.Bundle
+import com.github.mnotracker.{R, TypedViewHolder}
 
 class MainActivity extends Activity with TypedViewHolder {
+
+  import android.os.Bundle
 
   override def onCreate(bundle: Bundle) = {
     super.onCreate(bundle)

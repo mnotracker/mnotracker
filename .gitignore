@@ -2,6 +2,7 @@
 *.log
 .classpath
 .project
+tags
 
 # sbt specific
 .cache/
