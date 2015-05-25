@@ -12,6 +12,8 @@ version := "0.0.1"
 // Scala version
 scalaVersion := "2.11.6"
 
+scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation")
+
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.4" % "test"
 )
