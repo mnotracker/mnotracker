@@ -9,7 +9,7 @@ class NetworkChangeReceiver extends BroadcastReceiver {
   import com.github.mnotracker.Common._
 
   override def onReceive(context: Context, intent: Intent) = {
-    logi("NetworkChangeReceiver.onReceive on=" + isNetworkOn(context))
+    logd("NetworkChangeReceiver.onReceive on=" + isNetworkOn(context))
   }
 
 }
