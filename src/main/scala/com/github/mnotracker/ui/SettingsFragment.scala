@@ -1,22 +1,47 @@
 package com.github.mnotracker.ui
 
-import android.content.Context
-import android.os.Bundle
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.support.v4.preference.PreferenceFragment
 
 import com.github.mnotracker.R
 
-class SettingsFragment(context: Context) extends BaseFragment(context) {
+class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeListener {
 
+  import android.content.SharedPreferences
+  import android.os.Bundle
   import android.view.LayoutInflater
   import android.view.ViewGroup
 
   import com.github.mnotracker.Common.logd
 
-  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
-    logd("SettingsFragment.onCreateView")
-    inflater.inflate(R.layout.settings, container, false)
+  override def onCreate(savedInstanceState: Bundle) = {
+    logd("SettingsFragment.onCreate")
+    super.onCreate(savedInstanceState)
+    addPreferencesFromResource(R.xml.preferences)
   }
 
-  override def title() = context.getString(R.string.settings)
+  override def onResume() = {
+    logd("SettingsFragment.onResume")
+    super.onResume()
+    getPreferenceManager()
+      .getSharedPreferences()
+      .registerOnSharedPreferenceChangeListener(this)
+  }
 
+  override def onPause() = {
+    logd("SettingsFragment.onPause")
+    super.onPause()
+    getPreferenceManager()
+      .getSharedPreferences()
+      .unregisterOnSharedPreferenceChangeListener(this)
+  }
+
+  override def onSharedPreferenceChanged(sharedPref: SharedPreferences, key: String) = {
+    logd(s"SettingsFragment.onSharedPreferenceChanged $key")
+  }
+
+}
+
+object SettingsFragment {
+  val titleStringId: Int = R.string.settings
 }

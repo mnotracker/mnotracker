@@ -12,13 +12,13 @@ import scala.collection.immutable.Vector
 class MainPagerAdapter(val fm: FragmentManager, val context: Context) extends FragmentPagerAdapter(fm) {
 
   lazy val fragments = Vector(
-    new MainFragment(context),
-    new SettingsFragment(context),
-    new AboutFragment(context)
+    (new MainFragment, MainFragment.titleStringId),
+    (new SettingsFragment, SettingsFragment.titleStringId),
+    (new AboutFragment, AboutFragment.titleStringId)
   )
 
   override def getCount() = fragments.length
-  override def getItem(position: Int): BaseFragment = fragments(position)
-  override def getPageTitle(position: Int) = getItem(position).title()
+  override def getItem(position: Int): Fragment = fragments(position)._1
+  override def getPageTitle(position: Int) = context.getString(fragments(position)._2)
 
 }

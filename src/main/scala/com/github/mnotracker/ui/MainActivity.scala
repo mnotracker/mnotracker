@@ -29,7 +29,7 @@ class MainActivity extends FragmentActivity with TypedViewHolder {
 
   private def createTabs() = {
     import android.support.v4.view.ViewPager
-    val viewPager = (findViewById(R.id.pager)) match {
+    val viewPager = findViewById(R.id.pager) match {
       case vp: ViewPager => vp
     }
     viewPager.setAdapter(pagerAdapter)

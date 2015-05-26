@@ -1,12 +1,12 @@
 package com.github.mnotracker.ui
 
-import android.content.Context
-import android.os.Bundle
+import android.support.v4.app.Fragment
 
 import com.github.mnotracker.R
 
-class MainFragment(context: Context) extends BaseFragment(context) {
+class MainFragment extends Fragment {
 
+  import android.os.Bundle
   import android.view.LayoutInflater
   import android.view.ViewGroup
 
@@ -17,6 +17,8 @@ class MainFragment(context: Context) extends BaseFragment(context) {
     inflater.inflate(R.layout.settings, container, false)
   }
 
-  override def title() = context.getString(R.string.services)
+}
 
+object MainFragment {
+  val titleStringId: Int = R.string.services
 }
