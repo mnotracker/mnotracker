@@ -1,4 +1,4 @@
-package com.github.mnotracker.activities
+package com.github.mnotracker.ui
 
 import android.support.v4.app.FragmentActivity
 

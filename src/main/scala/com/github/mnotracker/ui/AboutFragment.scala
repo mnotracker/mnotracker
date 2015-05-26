@@ -1,11 +1,11 @@
-package com.github.mnotracker.activities
+package com.github.mnotracker.ui
 
 import android.content.Context
 import android.os.Bundle
 
 import com.github.mnotracker.R
 
-class MainFragment(context: Context) extends BaseFragment(context) {
+class AboutFragment(context: Context) extends BaseFragment(context) {
 
   import android.view.LayoutInflater
   import android.view.ViewGroup
@@ -13,10 +13,10 @@ class MainFragment(context: Context) extends BaseFragment(context) {
   import com.github.mnotracker.Common._
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
-    logd("MainFragment.onCreateView")
-    inflater.inflate(R.layout.settings, container, false)
+    logd("AboutFragment.onCreateView")
+    inflater.inflate(R.layout.about, container, false)
   }
 
-  override def title() = context.getString(R.string.services)
+  override def title() = context.getString(R.string.about)
 
 }

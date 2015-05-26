@@ -1,4 +1,4 @@
-package com.github.mnotracker.activities
+package com.github.mnotracker.ui
 
 import android.content.Context
 import android.os.Bundle
