@@ -11,7 +11,7 @@ class MainActivity extends FragmentActivity with TypedViewHolder {
   import android.os.Bundle
   import android.view.View
 
-  import com.github.mnotracker.Common._
+  import com.github.mnotracker.Common.logd
 
   import scala.util.Try
 

@@ -29,7 +29,7 @@ Getting started
   * `eclipse` to generate eclipse project
   * `test`
   * `run` to compile and run on the device
-  * `~ ; test` to run continuous integration testing
+  * `~ ; test ; scalastyle` to run continuous integration testing
 
 License
 ----

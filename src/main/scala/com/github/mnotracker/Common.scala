@@ -42,7 +42,7 @@ object Common {
         Option[NetworkInfo](cm.getActiveNetworkInfo()) match {
           case Some(info) =>
             info.getType() match {
-              case netType =>
+              case netType: Int =>
                 if (Settings.onlyViaWifi(context) && netType != ConnectivityManager.TYPE_WIFI && netType != ConnectivityManager.TYPE_WIMAX)
                   false
                 else
