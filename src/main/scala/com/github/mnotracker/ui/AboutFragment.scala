@@ -10,7 +10,7 @@ class AboutFragment(context: Context) extends BaseFragment(context) {
   import android.view.LayoutInflater
   import android.view.ViewGroup
 
-  import com.github.mnotracker.Common._
+  import com.github.mnotracker.Common.logd
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
     logd("AboutFragment.onCreateView")
