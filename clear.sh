@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rm -rfv bin target project/project/target project/target
+find . -type d -name target -print0 | xargs -0 rm -rfv

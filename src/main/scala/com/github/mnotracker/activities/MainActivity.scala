@@ -1,10 +1,12 @@
 package com.github.mnotracker.activities
 
-import android.app.Activity
+import android.support.v4.app.FragmentActivity
+
 import com.github.mnotracker.{R, TypedViewHolder}
 
-class MainActivity extends Activity with TypedViewHolder {
+class MainActivity extends FragmentActivity with TypedViewHolder {
 
+  import android.content.Context
   import android.content.Intent
   import android.os.Bundle
   import android.view.Menu
@@ -27,14 +29,16 @@ class MainActivity extends Activity with TypedViewHolder {
     )
   )*/
 
+  private val pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), this)
+
   override def onCreate(bundle: Bundle) = {
     logd("MainActivity.onCreate")
     super.onCreate(bundle)
     setContentView(R.layout.main)
-    //createTabs()
+    createTabs()
   }
 
-  override def onCreateOptionsMenu(menu: Menu): Boolean = {
+  /*override def onCreateOptionsMenu(menu: Menu): Boolean = {
     def updateMenuItem(menuItemId: Int, iconId: Int) = Try {
       menu.findItem(menuItemId).setIcon(iconId)
     }
@@ -53,42 +57,14 @@ class MainActivity extends Activity with TypedViewHolder {
       true
     case _ =>
       super.onOptionsItemSelected(item)
-  }
-
-  /*private def createTabs() = {
-    import android.support.v4.view.PagerAdapter
-    import android.support.v4.view.ViewPager
-    import android.view.LayoutInflater
-    import android.view.ViewGroup
-    val pageAdapter = new PagerAdapter {
-      override def getCount() = 1
-      override def initiateItem(container: ViewGroup, position: Int) = {
-        val view = getLayoutInflater().inflate(R.layout.pager_item, container, false)
-        container.addView(view)
-        view
-      }
-      override def isViewFromObject(view: View, obj: Object) = obj == view
-    }
-  }
+  }*/
 
   private def createTabs() = {
-    import android.app.ActionBar
-    import android.app.FragmentTransaction
-    val SETTINGS_TAB_DESCR = "settings_tab"
-    val bar = getActionBar()
-    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS)
-
-    val tabListener = new ActionBar.TabListener {
-      override def onTabSelected(tab: ActionBar.Tab, ft: FragmentTransaction) = {}
-      override def onTabUnselected(tab: ActionBar.Tab, ft: FragmentTransaction) = {}
-      override def onTabReselected(tab: ActionBar.Tab, ft: FragmentTransaction) = {}
+    import android.support.v4.view.ViewPager
+    val viewPager = (findViewById(R.id.pager)) match {
+      case vp: ViewPager => vp
     }
-    bar.addTab(
-      bar.newTab()
-        .setText(getString(R.string.settings))
-        .setContentDescription(SETTINGS_TAB_DESCR)
-        .setTabListener(tabListener)
-    )
-  }*/
+    viewPager.setAdapter(pagerAdapter)
+  }
 
 }

@@ -48,9 +48,9 @@ object Common {
                 else
                   info.isConnectedOrConnecting()
             }
-          case _ => false
+          case None => false
         }
-      case _ =>
+      case None =>
         loge("ConnectivityManager not found")
         false
     }
