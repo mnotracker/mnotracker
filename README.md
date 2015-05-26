@@ -13,6 +13,7 @@ Getting started
 1. Run `${ANDROID_HOME}/tools/android` executable (probably needs root)
   * from "Tools" section check "Android SDK Tools", "Android Platform-tools", "Android SDK Build-tools"
   * from "Android 5.1.1 (API 22)" check "SDK Platform"
+  * from "Extras" check "Android Support Library"
   * uncheck everything else or you'll waste your drive with unneeded stuff
   * Install - Accept License - Install
   * add paths to `${ANDROID_HOME}/tools` and `${ANDROID_HOME}/platform-tools` directories to your `${PATH}` environment variable
@@ -30,6 +31,9 @@ Getting started
   * `test`
   * `run` to compile and run on the device
   * `~ ; test ; scalastyle` to run continuous integration testing
+
+### Debug tools
+You can use `${ANDROID_HOME}/tools/monitor` or [QDeviceMonitor](https://github.com/alopatindev/qdevicemonitor#qdevicemonitor) as a log viewer
 
 License
 ----

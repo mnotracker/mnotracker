@@ -14,16 +14,19 @@ object Common {
   def logi(text: String) = Log.i(LOG_TAG, text)
   def logd(text: String) = Log.d(LOG_TAG, text)
 
-  def getPhoneNumber(context: Context) = {
-    import android.telephony.TelephonyManager
-    val service = context.getSystemService(Context.TELEPHONY_SERVICE)
-    service match {
-      case tm: TelephonyManager => Option[String](tm.getLine1Number) getOrElse ""
-      case _ => ""
+  def phoneNumber(context: Context) =
+    Try {
+      import android.telephony.TelephonyManager
+      val service = context.getSystemService(Context.TELEPHONY_SERVICE)
+      service match {
+        case tm: TelephonyManager => Option[String](tm.getLine1Number) getOrElse ""
+        case _ => ""
+      }
+    } getOrElse {
+      ""
     }
-  }
 
-  def getAppVersion(context: Context) =
+  def appVersion(context: Context) =
     Try {
       context
         .getPackageManager()
