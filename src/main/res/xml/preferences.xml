@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <Preference android:title="@string/new_account">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="com.github.mnotracker"
-            android:targetClass="com.github.mnotracker.ui.NewAccountActivity"/>
-    </Preference>
-    <CheckBoxPreference
-        android:key="only_bad_news"
-        android:title="@string/notify_only_bad_news"
-        android:summary="@string/notify_only_bad_news_summary"
-        android:defaultValue="true"/>
-    <CheckBoxPreference
-        android:key="dark_theme_on"
-        android:title="@string/dark_theme_on"
-        android:defaultValue="false"/>
-    <CheckBoxPreference
-        android:key="only_via_wifi"
-        android:title="@string/only_via_wifi"
-        android:defaultValue="false"/>
-    <CheckBoxPreference
-        android:key="telemetry_on"
-        android:title="@string/telemetry_on"
-        android:summary="@string/telemetry_on_summary"
-        android:defaultValue="true"/>
+    <PreferenceCategory android:title="@string/accounts">
+        <Preference android:title="@string/new_account">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetPackage="com.github.mnotracker"
+                android:targetClass="com.github.mnotracker.ui.NewAccountActivity"/>
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/other_settings">
+      <CheckBoxPreference
+          android:key="only_bad_news"
+          android:title="@string/notify_only_bad_news"
+          android:summary="@string/notify_only_bad_news_summary"
+          android:defaultValue="true"/>
+      <CheckBoxPreference
+          android:key="dark_theme_on"
+          android:title="@string/dark_theme_on"
+          android:defaultValue="false"/>
+      <CheckBoxPreference
+          android:key="only_via_wifi"
+          android:title="@string/only_via_wifi"
+          android:defaultValue="false"/>
+      <CheckBoxPreference
+          android:key="telemetry_on"
+          android:title="@string/telemetry_on"
+          android:summary="@string/telemetry_on_summary"
+          android:defaultValue="true"/>
+    </PreferenceCategory>
 </PreferenceScreen>
