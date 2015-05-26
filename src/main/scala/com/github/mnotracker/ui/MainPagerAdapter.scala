@@ -1,18 +1,19 @@
 package com.github.mnotracker.ui
 
 import android.content.Context
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
-import com.github.mnotracker.R
+class MainPagerAdapter(fm: FragmentManager, context: Context) extends FragmentPagerAdapter(fm) {
 
-import scala.collection.immutable.Vector
+  import android.support.v4.app.Fragment
 
-class MainPagerAdapter(val fm: FragmentManager, val context: Context) extends FragmentPagerAdapter(fm) {
+  import com.github.mnotracker.R
+
+  import scala.collection.immutable.Vector
 
   lazy val fragments = Vector(
-    (new MainFragment, MainFragment.titleStringId),
+    (new ServicesFragment, ServicesFragment.titleStringId),
     (new SettingsFragment, SettingsFragment.titleStringId),
     (new AboutFragment, AboutFragment.titleStringId)
   )

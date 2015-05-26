@@ -10,4 +10,8 @@
     <string name="only_via_wifi">Wi-Fi Only</string>
     <string name="telemetry_on">Send Telemetry</string>
     <string name="telemetry_on_summary">Help developers with improving the app</string>
+    <string name="accounts">Accounts / MNOs</string>
+    <string name="new_account">New Account</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment
 
 import com.github.mnotracker.R
 
-class MainFragment extends Fragment {
+class ServicesFragment extends Fragment {
 
   import android.os.Bundle
   import android.view.LayoutInflater
@@ -13,12 +13,12 @@ class MainFragment extends Fragment {
   import com.github.mnotracker.Common.logd
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
-    logd("MainFragment.onCreateView")
-    inflater.inflate(R.layout.settings, container, false)
+    logd("ServicesFragment.onCreateView")
+    inflater.inflate(R.layout.services, container, false)
   }
 
 }
 
-object MainFragment {
+object ServicesFragment {
   val titleStringId: Int = R.string.services
 }
