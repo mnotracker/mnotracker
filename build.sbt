@@ -1,40 +1,37 @@
 android.Plugin.androidBuild
 
-// Specifying the Android target Sdk version
-platformTarget in Android := "android-22"
-
-// Application Name
 name := "mnotracker"
-
-// Application Version
 version := "0.0.1"
 
-// Scala version
 scalaVersion := "2.11.6"
-
 scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation")
+scalacOptions in Compile ++= Seq("-feature")
+
+javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+  "org.scalatest" %% "scalatest" % "2.2.4" % "test",
+  "com.android.support" % "support-v4" % "20.0.0"
 )
 
 // Repositories for dependencies
-resolvers ++= Seq(Resolver.mavenLocal,
+resolvers ++= Seq(
+  Resolver.mavenLocal,
   DefaultMavenRepository,
   Resolver.typesafeRepo("releases"),
   Resolver.typesafeRepo("snapshots"),
   Resolver.typesafeIvyRepo("snapshots"),
   Resolver.sonatypeRepo("releases"),
   Resolver.sonatypeRepo("snapshots"),
-  Resolver.defaultLocal)
+  Resolver.defaultLocal,
+  "jcenter" at "http://jcenter.bintray.com"
+)
 
-// Override the run task with the android:run
+platformTarget in Android := "android-22"
 run <<= run in Android
-
 proguardScala in Android := true
-
 useProguard in Android := true
-
 proguardOptions in Android ++= Seq(
   "-ignorewarnings",
-  "-keep class scala.Dynamic")
+  "-keep class scala.Dynamic"
+)

@@ -13,7 +13,7 @@ Getting started
 1. Run `${ANDROID_HOME}/tools/android` executable (probably needs root)
   * from "Tools" section check "Android SDK Tools", "Android Platform-tools", "Android SDK Build-tools"
   * from "Android 5.1.1 (API 22)" check "SDK Platform"
-  * from "Extras" check "Android Support Library"
+  * from "Extras" check "Android Support Repository", "Android Support Library"
   * uncheck everything else or you'll waste your drive with unneeded stuff
   * Install - Accept License - Install
   * add paths to `${ANDROID_HOME}/tools` and `${ANDROID_HOME}/platform-tools` directories to your `${PATH}` environment variable
@@ -27,7 +27,6 @@ Getting started
 1. Run `scala` to make sure that you're running the correct version of JVM (it should be OpenJDK); exit it
 1. Run `./configure.sh` (the first run can take about 20 minutes to download all the dependencies to ~/.ivy2 directory)
 1. From `sbt` command prompt you can
-  * `eclipse` to generate eclipse project
   * `test`
   * `run` to compile and run on the device
   * `~ ; test ; scalastyle` to run continuous integration testing
