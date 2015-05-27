@@ -60,5 +60,20 @@ class ContextUtils(context: Context) {
 }
 
 object ContextUtils {
+
+  import android.os.{Handler, Looper}
+
   def apply(context: Context) = new ContextUtils(context)
+
+  lazy val handler = new Handler(Looper.getMainLooper)
+  lazy val uiThread = Looper.getMainLooper.getThread
+
+  def runOnUi(f: => Unit): Unit =
+    if (uiThread == Thread.currentThread)
+      f
+    else
+      handler
+        .post(new Runnable() {
+          def run() { f }
+        })
 }
