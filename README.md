@@ -25,8 +25,8 @@ Getting started
 ### Scala, sbt and IcedTea JDK
 1. Install Scala, sbt and IcedTea JDK using your distro
 1. Run `scala` to make sure that you're running the correct version of JVM (it should be OpenJDK); exit it
-1. Run `./configure.sh` (the first run can take about 20 minutes to download all the dependencies to ~/.ivy2 directory)
-1. From `sbt` command prompt you can
+1. Run `./run-sbt.sh` (the first run can take about 20 minutes to download all the dependencies to ~/.ivy2 directory)
+1. From sbt command prompt you can
   * `test`
   * `run` to compile and run on the device
   * `~ ; test ; scalastyle` to run continuous integration testing
