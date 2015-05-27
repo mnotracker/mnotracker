@@ -1,20 +1,14 @@
 package com.github.mnotracker
 
-object Common {
+import android.content.Context
 
-  import android.content.Context
-  import android.util.Log
+class ContextUtils(context: Context) {
+
+  import com.github.mnotracker.Logs.loge
 
   import scala.util.Try
 
-  private val LOG_TAG = "mnotracker"
-
-  def loge(text: String) = Log.e(LOG_TAG, text)
-  def logw(text: String) = Log.w(LOG_TAG, text)
-  def logi(text: String) = Log.i(LOG_TAG, text)
-  def logd(text: String) = Log.d(LOG_TAG, text)
-
-  def phoneNumber(context: Context) =
+  def phoneNumber() =
     Try {
       import android.telephony.TelephonyManager
       val service = context.getSystemService(Context.TELEPHONY_SERVICE)
@@ -26,7 +20,7 @@ object Common {
       ""
     }
 
-  def appVersion(context: Context) =
+  def appVersion() =
     Try {
       context
         .getPackageManager()
@@ -36,7 +30,7 @@ object Common {
       "(unknown version)"
     }
 
-  def isNetworkOn(context: Context) = {
+  def isNetworkOn() = {
     import android.net.ConnectivityManager
     import android.net.NetworkInfo
     val service = context.getSystemService(Context.CONNECTIVITY_SERVICE)
@@ -46,7 +40,11 @@ object Common {
           case Some(info) =>
             info.getType() match {
               case netType: Int =>
-                if (Settings.onlyViaWifi(context) && netType != ConnectivityManager.TYPE_WIFI && netType != ConnectivityManager.TYPE_WIMAX)
+                val wrongNetType =
+                  Settings.onlyViaWifi(context) &&
+                  netType != ConnectivityManager.TYPE_WIFI &&
+                  netType != ConnectivityManager.TYPE_WIMAX
+                if (wrongNetType)
                   false
                 else
                   info.isConnectedOrConnecting()
@@ -59,4 +57,8 @@ object Common {
     }
   }
 
+}
+
+object ContextUtils {
+  def apply(context: Context) = new ContextUtils(context)
 }

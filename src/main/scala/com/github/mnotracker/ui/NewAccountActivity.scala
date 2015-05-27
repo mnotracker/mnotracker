@@ -8,7 +8,7 @@ class NewAccountActivity extends Activity with TypedViewHolder {
 
   import android.os.Bundle
 
-  import com.github.mnotracker.Common.logd
+  import com.github.mnotracker.Logs.logd
 
   override def onCreate(bundle: Bundle) = {
     logd(s"NewAccountActivity.onCreate")

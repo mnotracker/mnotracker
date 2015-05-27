@@ -12,7 +12,7 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
   import android.view.LayoutInflater
   import android.view.ViewGroup
 
-  import com.github.mnotracker.Common.logd
+  import com.github.mnotracker.Logs.logd
 
   override def onCreate(savedInstanceState: Bundle) = {
     logd("SettingsFragment.onCreate")

@@ -10,7 +10,7 @@ class ServicesFragment extends Fragment {
   import android.view.LayoutInflater
   import android.view.ViewGroup
 
-  import com.github.mnotracker.Common.logd
+  import com.github.mnotracker.Logs.logd
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
     logd("ServicesFragment.onCreateView")
