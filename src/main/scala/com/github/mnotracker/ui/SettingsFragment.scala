@@ -3,7 +3,7 @@ package com.github.mnotracker.ui
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.support.v4.preference.PreferenceFragment
 
-import com.github.mnotracker.R
+import com.github.mnotracker.{R, Settings}
 
 class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeListener {
 
@@ -36,8 +36,17 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
       .unregisterOnSharedPreferenceChangeListener(this)
   }
 
-  override def onSharedPreferenceChanged(sharedPref: SharedPreferences, key: String) = {
-    logd(s"SettingsFragment.onSharedPreferenceChanged $key")
+  override def onSharedPreferenceChanged(sharedPref: SharedPreferences, key: String) = key match {
+    case Settings.DARK_THEME_ON => restartApplication()
+  }
+
+  private def restartApplication() = {
+    import android.content.Intent
+    logd(s"SettingsFragment.restartApplication")
+    val activity = getActivity()
+    val intent = new Intent(activity, classOf[MainActivity])
+    activity.finish()
+    startActivity(intent)
   }
 
 }
