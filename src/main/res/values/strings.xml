@@ -15,4 +15,12 @@
     <string name="new_account">New Account</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="your_phone_number">Phone Number</string>
+    <string name="your_password">Password</string>
+    <string name="signup">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="megafon">MegaFon</string>
+    <string name="mts">MTS</string>
+    <string name="beeline">Beeline</string>
+    <string name="tele2">Tele2</string>
 </resources>

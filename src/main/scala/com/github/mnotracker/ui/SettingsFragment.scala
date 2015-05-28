@@ -42,7 +42,7 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
 
   private def restartApplication() = {
     import android.content.Intent
-    logd(s"SettingsFragment.restartApplication")
+    logd("SettingsFragment.restartApplication")
     val activity = getActivity()
     val intent = new Intent(activity, classOf[MainActivity])
     activity.finish()
