@@ -17,6 +17,16 @@ class MainActivity extends FragmentActivity with TypedViewHolder with ActivityUt
     super.onCreate(bundle)
     setContentView(R.layout.main)
     createTabs()
+
+    {
+      import scala.concurrent.Future
+      import scala.concurrent.ExecutionContext.Implicits.global
+      Future {
+        Thread.sleep(5000)
+        import com.github.mnotracker.ContextUtils
+        ContextUtils runOnUIThread { Notifications.notify(getApplicationContext(), "Yep") }
+      }
+    }
   }
 
   private def createTabs() = {
