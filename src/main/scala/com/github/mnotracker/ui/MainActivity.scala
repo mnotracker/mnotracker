@@ -11,6 +11,8 @@ class MainActivity extends FragmentActivity with TypedViewHolder with ActivityUt
 
   import com.github.mnotracker.Logs.logd
 
+  private implicit val context: Context = this
+
   override def onCreate(bundle: Bundle) = {
     logd("MainActivity.onCreate")
     updateTheme()
