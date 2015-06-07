@@ -15,6 +15,8 @@ object ContextUtils {
   lazy val handler = new Handler(Looper.getMainLooper)
   lazy val uiThread = Looper.getMainLooper.getThread
 
+  def getString(id: Int)(implicit ctx: Context): String = ctx.getString(id)
+
   def runOnUIThread(f: => Unit): Unit =
     if (uiThread == Thread.currentThread)
       f
@@ -38,21 +40,23 @@ object ContextUtils {
       p.future
     }
 
-  def phoneNumber()(implicit ctx: Context) =
-    Try {
+  def phoneNumber()(implicit ctx: Context): Option[String] =
+    Try[String] {
       import android.telephony.TelephonyManager
 
+      def throwEx() = throw new NoSuchElementException
       val service = ctx.getSystemService(Context.TELEPHONY_SERVICE)
       service match {
-        case tm: TelephonyManager => Option[String](tm.getLine1Number) getOrElse ""
-        case _ => ""
+        case tm: TelephonyManager =>
+          val number = tm.getLine1Number
+          if (number.isEmpty) throwEx()
+          else number
+        case None => throwEx()
       }
-    } getOrElse {
-      ""
-    }
+    }.toOption
 
-  def appVersion()(implicit ctx: Context) =
-    Try {
+  def appVersion()(implicit ctx: Context): String =
+    Try[String] {
       ctx
         .getPackageManager()
         .getPackageInfo(ctx.getPackageName(), 0)
@@ -61,32 +65,20 @@ object ContextUtils {
       "(unknown version)"
     }
 
-  def isNetworkOn()(implicit ctx: Context) = {
+  def isNetworkOn()(implicit ctx: Context): Boolean = Try {
     import android.net.ConnectivityManager
     import android.net.NetworkInfo
 
     val service = ctx.getSystemService(Context.CONNECTIVITY_SERVICE)
     service match {
       case cm: ConnectivityManager =>
-        Option[NetworkInfo](cm.getActiveNetworkInfo()) match {
-          case Some(info) =>
-            info.getType() match {
-              case netType: Int =>
-                val wrongNetType =
-                  Settings.onlyViaWifi() &&
-                  netType != ConnectivityManager.TYPE_WIFI &&
-                  netType != ConnectivityManager.TYPE_WIMAX
-                if (wrongNetType)
-                  false
-                else
-                  info.isConnectedOrConnecting()
-            }
-          case None => false
-        }
-      case None =>
-        loge("ConnectivityManager is not found")
-        false
+        val info: NetworkInfo = cm.getActiveNetworkInfo()
+        lazy val netType = info.getType()
+        lazy val isWiFi = netType == ConnectivityManager.TYPE_WIFI || netType == ConnectivityManager.TYPE_WIMAX
+        val correctNetType = !Settings.onlyViaWifi() || isWiFi
+        correctNetType && info.isConnectedOrConnecting()
+      case None => false
     }
-  }
+  } getOrElse false
 
 }

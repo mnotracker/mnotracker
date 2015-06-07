@@ -38,6 +38,7 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
 
   override def onSharedPreferenceChanged(sharedPref: SharedPreferences, key: String) = key match {
     case Settings.DARK_THEME_ON => restartApplication()
+    case _ => // TODO
   }
 
   private def restartApplication() = {

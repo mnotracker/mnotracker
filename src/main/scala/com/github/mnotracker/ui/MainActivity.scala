@@ -14,10 +14,11 @@ class MainActivity extends FragmentActivity with TypedViewHolder with ActivityUt
     logd("MainActivity.onCreate")
     updateTheme()
     super.onCreate(bundle)
+
     setContentView(R.layout.main)
     createTabs()
 
-    {
+    /*{
       import scala.concurrent.Future
       import scala.concurrent.ExecutionContext.Implicits.global
       Future {
@@ -25,11 +26,19 @@ class MainActivity extends FragmentActivity with TypedViewHolder with ActivityUt
         import com.github.mnotracker.ContextUtils
         ContextUtils runOnUIThread { Notifications.notify(getApplicationContext(), "Yep") }
       }
-    }
+    }*/
+  }
+
+  override def onResume() = {
+    logd("MainActivity.onResume")
+    super.onResume()
+
+    Notifications.cancelAll(this)
   }
 
   private def createTabs() = {
     import android.support.v4.view.ViewPager
+
     val adapter = new MainPagerAdapter(getSupportFragmentManager(), this)
     find[ViewPager](R.id.pager) setAdapter adapter
   }

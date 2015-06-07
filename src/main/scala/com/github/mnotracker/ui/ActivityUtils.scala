@@ -7,7 +7,7 @@ trait ActivityUtils <: Activity {
   import android.content.Context
   import android.view.View
 
-  private implicit val ctx: Context = this
+  implicit val ctx: Context = this
 
   def find[V <: View](id: Int): V = findViewById(id).asInstanceOf[V]
 
