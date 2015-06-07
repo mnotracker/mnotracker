@@ -10,11 +10,12 @@ object Settings {
   val ONLY_VIA_WIFI = "only_via_wifi"
   val TELEMETRY_ON = "telemetry_on"
 
-  private def sharedPreferences(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
+  private def sharedPreferences(context: Context) =
+    PreferenceManager.getDefaultSharedPreferences(context)
 
-  def onlyBadNews(context: Context) = sharedPreferences(context).getBoolean(ONLY_BAD_NEWS, true)
-  def darkThemeOn(context: Context) = sharedPreferences(context).getBoolean(DARK_THEME_ON, false)
-  def onlyViaWifi(context: Context) = sharedPreferences(context).getBoolean(ONLY_VIA_WIFI, false)
-  def telemetryOn(context: Context) = sharedPreferences(context).getBoolean(TELEMETRY_ON, true)
+  def onlyBadNews()(implicit ctx: Context) = sharedPreferences(ctx).getBoolean(ONLY_BAD_NEWS, true)
+  def darkThemeOn()(implicit ctx: Context) = sharedPreferences(ctx).getBoolean(DARK_THEME_ON, false)
+  def onlyViaWifi()(implicit ctx: Context) = sharedPreferences(ctx).getBoolean(ONLY_VIA_WIFI, false)
+  def telemetryOn()(implicit ctx: Context) = sharedPreferences(ctx).getBoolean(TELEMETRY_ON, true)
 
 }

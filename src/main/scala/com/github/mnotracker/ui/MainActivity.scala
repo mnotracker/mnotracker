@@ -6,12 +6,9 @@ import com.github.mnotracker.{R, TypedViewHolder}
 
 class MainActivity extends FragmentActivity with TypedViewHolder with ActivityUtils {
 
-  import android.content.Context
   import android.os.Bundle
 
   import com.github.mnotracker.Logs.logd
-
-  private implicit val context: Context = this
 
   override def onCreate(bundle: Bundle) = {
     logd("MainActivity.onCreate")

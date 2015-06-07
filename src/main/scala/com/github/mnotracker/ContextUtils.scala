@@ -38,11 +38,11 @@ object ContextUtils {
       p.future
     }
 
-  def phoneNumber(implicit context: Context) =
+  def phoneNumber()(implicit ctx: Context) =
     Try {
       import android.telephony.TelephonyManager
 
-      val service = context.getSystemService(Context.TELEPHONY_SERVICE)
+      val service = ctx.getSystemService(Context.TELEPHONY_SERVICE)
       service match {
         case tm: TelephonyManager => Option[String](tm.getLine1Number) getOrElse ""
         case _ => ""
@@ -51,21 +51,21 @@ object ContextUtils {
       ""
     }
 
-  def appVersion(implicit context: Context) =
+  def appVersion()(implicit ctx: Context) =
     Try {
-      context
+      ctx
         .getPackageManager()
-        .getPackageInfo(context.getPackageName(), 0)
+        .getPackageInfo(ctx.getPackageName(), 0)
         .versionName
     } getOrElse {
       "(unknown version)"
     }
 
-  def isNetworkOn(implicit context: Context) = {
+  def isNetworkOn()(implicit ctx: Context) = {
     import android.net.ConnectivityManager
     import android.net.NetworkInfo
 
-    val service = context.getSystemService(Context.CONNECTIVITY_SERVICE)
+    val service = ctx.getSystemService(Context.CONNECTIVITY_SERVICE)
     service match {
       case cm: ConnectivityManager =>
         Option[NetworkInfo](cm.getActiveNetworkInfo()) match {
@@ -73,7 +73,7 @@ object ContextUtils {
             info.getType() match {
               case netType: Int =>
                 val wrongNetType =
-                  Settings.onlyViaWifi(context) &&
+                  Settings.onlyViaWifi() &&
                   netType != ConnectivityManager.TYPE_WIFI &&
                   netType != ConnectivityManager.TYPE_WIMAX
                 if (wrongNetType)
