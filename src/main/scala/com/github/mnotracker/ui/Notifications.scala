@@ -12,13 +12,10 @@ object Notifications {
       import android.app.NotificationManager
       import android.app.PendingIntent
       import android.content.Intent
-      import android.os.Build
 
       import com.github.mnotracker.R
 
       logi(s"notification '$text'")
-
-      val newAndroidAPI = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
 
       val requestCode = 0
       val flags = 0
@@ -33,12 +30,7 @@ object Notifications {
         .setSmallIcon(R.drawable.ic_launcher)
         //.setLargeIcon(aBitmap)
 
-      val notif: Notification =
-        if (newAndroidAPI)
-          nb.build()
-        else
-          nb.getNotification()
-
+      val notif: Notification = nb.build()
       notif.flags |= Notification.FLAG_AUTO_CANCEL
 
       val service = context.getSystemService(Context.NOTIFICATION_SERVICE)
