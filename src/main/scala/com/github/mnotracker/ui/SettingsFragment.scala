@@ -9,6 +9,7 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
 
   import android.content.SharedPreferences
   import android.os.Bundle
+  import android.preference.{Preference, PreferenceCategory, SwitchPreference}
   import android.view.LayoutInflater
   import android.view.ViewGroup
 
@@ -18,6 +19,7 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
     logd("SettingsFragment.onCreate")
     super.onCreate(savedInstanceState)
     addPreferencesFromResource(R.xml.preferences)
+    addAccounts()
   }
 
   override def onResume() = {
@@ -50,6 +52,17 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
     startActivity(intent)
   }
 
+  private def addAccounts() = {
+    val category = findPref[PreferenceCategory]("accounts_category")
+
+    val switch = new Preference(getActivity())
+    //switch.setKey() // TODO
+    switch.setTitle("MTS +7123456789")
+    switch.setSummary(getString(R.string.off))
+    category.addPreference(switch)
+  }
+
+  private def findPref[P <: Preference](key: String): P = findPreference(key).asInstanceOf[P]
 }
 
 object SettingsFragment {

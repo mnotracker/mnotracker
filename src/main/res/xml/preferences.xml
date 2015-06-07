@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/accounts">
+    <PreferenceCategory
+        android:title="@string/accounts"
+        android:key="accounts_category">
         <Preference android:title="@string/new_account">
             <intent
                 android:action="android.intent.action.VIEW"
