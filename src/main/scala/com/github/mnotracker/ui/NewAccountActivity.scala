@@ -2,9 +2,9 @@ package com.github.mnotracker.ui
 
 import android.app.Activity
 
-import com.github.mnotracker.{R, TypedViewHolder}
+import com.github.mnotracker.{R, TypedFindView}
 
-class NewAccountActivity extends Activity with TypedViewHolder with ActivityUtils {
+class NewAccountActivity extends Activity with TypedFindView with ActivityUtils {
 
   import android.os.Bundle
   import android.view.View

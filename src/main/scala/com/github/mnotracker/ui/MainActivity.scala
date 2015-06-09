@@ -2,9 +2,9 @@ package com.github.mnotracker.ui
 
 import android.support.v4.app.FragmentActivity
 
-import com.github.mnotracker.{R, TypedViewHolder}
+import com.github.mnotracker.{R, TypedFindView}
 
-class MainActivity extends FragmentActivity with TypedViewHolder with ActivityUtils {
+class MainActivity extends FragmentActivity with TypedFindView with ActivityUtils {
 
   import android.os.Bundle
 
