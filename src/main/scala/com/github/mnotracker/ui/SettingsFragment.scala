@@ -45,6 +45,7 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
 
   private def restartApplication() = {
     import android.content.Intent
+
     logd("SettingsFragment.restartApplication")
     val activity = getActivity()
     val intent = new Intent(activity, classOf[MainActivity])
@@ -55,11 +56,11 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
   private def addAccounts() = {
     val category = findPref[PreferenceCategory]("accounts_category")
 
-    val switch = new Preference(getActivity())
-    //switch.setKey() // TODO
-    switch.setTitle("MTS +7123456789")
-    switch.setSummary(getString(R.string.off))
-    category.addPreference(switch)
+    val pref = new Preference(getActivity())
+    //pref.setKey() // TODO
+    pref.setTitle("MTS +7123456789")
+    pref.setSummary(getString(R.string.off))
+    category.addPreference(pref)
   }
 
   private def findPref[P <: Preference](key: String): P = findPreference(key).asInstanceOf[P]

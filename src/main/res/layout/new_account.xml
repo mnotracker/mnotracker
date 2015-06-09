@@ -13,9 +13,9 @@
         android:hint="@string/your_phone_number"
         android:singleLine="true"
         android:layout_gravity="center_vertical|center_horizontal"/>
+        <!-- android:inputType="textPassword" -->
     <EditText
         android:id="@+id/edit_password"
-        android:inputType="textPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/your_password"
