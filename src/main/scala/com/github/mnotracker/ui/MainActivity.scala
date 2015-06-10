@@ -12,7 +12,6 @@ class MainActivity extends FragmentActivity with TypedFindView with ActivityUtil
 
   override def onCreate(bundle: Bundle) = {
     logd("MainActivity.onCreate")
-    updateTheme()
     super.onCreate(bundle)
 
     setContentView(R.layout.main)

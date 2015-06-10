@@ -5,9 +5,12 @@ object Settings {
   import android.preference.PreferenceManager
   import android.content.Context
 
+  import com.github.mnotracker.Logs.{logd, loge}
+
   import org.json.JSONObject
 
   import scala.collection.JavaConversions.{asScalaIterator, asScalaSet, setAsJavaSet}
+  import scala.util.Try
 
   val ONLY_BAD_NEWS = "only_bad_news"
   val DARK_THEME_ON = "dark_theme_on"
@@ -19,18 +22,21 @@ object Settings {
   val OPERATOR = "operator"
   val ENABLED = "enabled"
 
+  object OPERATORS {
+    val MTS = "mts"
+    val MEGAFON = "megafon"
+    val BEELINE = "beeline"
+    val TELE2 = "tele2"
+  }
+
   def onlyBadNews()(implicit ctx: Context) = getBoolean(ONLY_BAD_NEWS, true)
   def darkThemeOn()(implicit ctx: Context) = getBoolean(DARK_THEME_ON, false)
   def onlyViaWifi()(implicit ctx: Context) = getBoolean(ONLY_VIA_WIFI, false)
   def telemetryOn()(implicit ctx: Context) = getBoolean(TELEMETRY_ON, true)
 
-  class MobileOperator
-  case object MegafonMobileOperator extends MobileOperator
-  case object MtsMobileOperator extends MobileOperator
-  case object BeelineMobileOperator extends MobileOperator
-  case object Tele2MobileOperator extends MobileOperator
+  def addAccount(phoneNumber: String, password: String, operator: String)(implicit ctx: Context): Unit = {
+    logd(s"addAccount '$phoneNumber' '$password' '$operator'")
 
-  def addAccount(phoneNumber: String, password: String, operator: MobileOperator)(implicit ctx: Context) = {
     val jsonArray = new JSONObject()
       .put(PASSWORD, password)
       .put(OPERATOR, operator)
@@ -38,41 +44,31 @@ object Settings {
       //.put(STATE, )
       //.put(LAST_DATA_FETCH, )
 
-    sharedPreferences()
+    val success = sharedPreferences()
       .edit()
       .putString(phoneNumber, jsonArray.toString())
       .putStringSet(ACCOUNTS, getStringSet(ACCOUNTS) ++ Set(phoneNumber))
       .commit()
+
+    logd("accounts commit" + (if (success) "OK" else "FAILED"))
   }
 
-  private def getAccounts()(implicit ctx: Context): Map[String, Map[String, Any]] =
-    getStringSet(ACCOUNTS)
-      .map(account => (account, getAccount(account)))
-      .toMap
+  def accounts()(implicit ctx: Context) = getStringSet(ACCOUNTS)
+  def isAccountEnabled(account: String)(implicit ctx: Context) = accountObject(account).getBoolean(ENABLED)
+  def accountOperator(account: String)(implicit ctx: Context) = accountObject(account).getString(OPERATOR)
+  def accountPassword(account: String)(implicit ctx: Context) = accountObject(account).getString(PASSWORD)
 
-  private def getAccount(account: String)(implicit ctx: Context): Map[String, Any] = {
-    val obj = new JSONObject(sharedPreferences().getString(account, ""))
-    asScalaIterator(obj.keys())
-    .map(
-      name => (
-        name,
-        name match {
-          case ENABLED => obj.getBoolean(name)
-          case _ => obj.getString(name)
-        }
-      )
-    ).toMap
-  }
+  private def accountObject(account: String)(implicit ctx: Context) = new JSONObject(sharedPreferences().getString(account, ""))
 
   private def sharedPreferences()(implicit ctx: Context) = PreferenceManager.getDefaultSharedPreferences(ctx)
 
   private def getBoolean(key: String, default: Boolean)(implicit ctx: Context) = sharedPreferences().getBoolean(key, default)
   private def getString(key: String, default: String)(implicit ctx: Context) = sharedPreferences().getString(key, default)
-  private def getStringSet(key: String, default: Set[String] = Set[String]())
-                          (implicit ctx: Context): Set[String] = {
-    val javaSet = sharedPreferences().getStringSet(key, setAsJavaSet(default))
-    val mutableSet = asScalaSet(javaSet)
-    mutableSet.toSet
-  }
+
+  private def getStringSet(key: String, default: Set[String] = Set[String]())(implicit ctx: Context): Set[String] = {
+      val javaSet = sharedPreferences().getStringSet(key, setAsJavaSet(default))
+      val mutableSet = asScalaSet(javaSet)
+      mutableSet.toSet
+    }
 
 }

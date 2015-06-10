@@ -23,7 +23,7 @@ object ContextUtils {
     else
       handler post {
         new Runnable() {
-          def run() = { f }
+          override def run() = { f }
         }
       }
 
@@ -33,7 +33,7 @@ object ContextUtils {
     } else {
       val p = Promise[T]()
       handler.post(new Runnable() {
-        def run() = {
+        override def run() = {
           p.complete(Try(f))
         }
       })

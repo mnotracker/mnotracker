@@ -7,13 +7,15 @@ import com.github.mnotracker.{R, Settings}
 
 class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeListener {
 
-  import android.content.SharedPreferences
+  import android.content.{Context, SharedPreferences}
   import android.os.Bundle
   import android.preference.{Preference, PreferenceCategory, SwitchPreference}
   import android.view.LayoutInflater
   import android.view.ViewGroup
 
   import com.github.mnotracker.Logs.logd
+
+  private implicit def ctx: Context = getActivity()
 
   override def onCreate(savedInstanceState: Bundle) = {
     logd("SettingsFragment.onCreate")
@@ -56,11 +58,21 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
   private def addAccounts() = {
     val category = findPref[PreferenceCategory]("accounts_category")
 
-    val pref = new Preference(getActivity())
-    //pref.setKey() // TODO
-    pref.setTitle("MTS +7123456789")
-    pref.setSummary(getString(R.string.off))
-    category.addPreference(pref)
+    for {
+      phoneNumber <- Settings.accounts()
+      operator = Settings.accountOperator(phoneNumber)
+      enabled = Settings.isAccountEnabled(phoneNumber)
+      title = s"$operator $phoneNumber"
+    } yield {
+      logd(s"adding preference '$phoneNumber'")
+      val pref = new Preference(getActivity())
+      pref.setKey(phoneNumber)
+      pref.setTitle(title)
+      if (!enabled) {
+        pref.setSummary(getString(R.string.off))
+      }
+      category.addPreference(pref)
+    }
   }
 
   private def findPref[P <: Preference](key: String): P = findPreference(key).asInstanceOf[P]
