@@ -27,6 +27,13 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
   override def onResume() = {
     logd("SettingsFragment.onResume")
     super.onResume()
+
+    if (SettingsFragment.dirtyAccounts) {
+      SettingsFragment.dirtyAccounts = false
+      MainActivity restoreTo MainActivity.settingsTab
+      restartApplication()
+    }
+
     getPreferenceManager()
       .getSharedPreferences()
       .registerOnSharedPreferenceChangeListener(this)
@@ -56,13 +63,12 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
   }
 
   private def addAccounts() = {
-    val category = findPref[PreferenceCategory]("accounts_category")
-
+    val category = accountsCategory()
     for {
       phoneNumber <- Settings.accounts()
-      operator = Settings.accountOperator(phoneNumber)
+      operatorText = Settings.accountOperatorText(phoneNumber)
       enabled = Settings.isAccountEnabled(phoneNumber)
-      title = s"$operator $phoneNumber"
+      title = s"$operatorText $phoneNumber"
     } yield {
       logd(s"adding preference '$phoneNumber'")
       val pref = new Preference(getActivity())
@@ -75,9 +81,12 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
     }
   }
 
+  private def accountsCategory() = findPref[PreferenceCategory]("accounts_category")
   private def findPref[P <: Preference](key: String): P = findPreference(key).asInstanceOf[P]
+
 }
 
 object SettingsFragment {
   val titleStringId: Int = R.string.settings
+  var dirtyAccounts = false
 }

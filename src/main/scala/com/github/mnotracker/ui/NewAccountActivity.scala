@@ -15,6 +15,8 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
   import com.github.mnotracker.Logs.logd
   import com.github.mnotracker.Settings
 
+  private var operatorRadioButtonId = -1
+
   override def onCreate(bundle: Bundle) = {
     logd("NewAccountActivity.onCreate")
     super.onCreate(bundle)
@@ -22,30 +24,35 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
 
     setButtonHandler(
       find[Button](R.id.button_login),
-      () => Settings.addAccount(
-        phoneNumber = phoneNumber(),
-        password = password(),
-        operator = operator()
-      )
+      () => {
+        Settings.addAccount(
+          phoneNumber = phoneNumber(),
+          password = password(),
+          operator = operator()
+        )
+        SettingsFragment.dirtyAccounts = true
+        finish()
+      }
     )
+
+    val radioMegafon = find[RadioButton](R.id.radio_megafon)
+    radioMegafon setChecked true
+    onOperatorClick(radioMegafon)
   }
 
-  def onMnoClicked(view: View) = {
-    logd("NewAccountActivity.onMnoClicked")
-
-    val operatorRadioButtonId = view.asInstanceOf[RadioButton].getId()
-    val selectedOperator = operatorRadioButtonId match {
-      case R.id.radio_megafon => Settings.OPERATORS.MEGAFON
-      case R.id.radio_mts => Settings.OPERATORS.MTS
-      case R.id.radio_beeline => Settings.OPERATORS.BEELINE
-      case R.id.radio_tele2 => Settings.OPERATORS.TELE2
-    }
+  def onOperatorClick(view: View) = {
+    logd("NewAccountActivity.onOperatorClick")
+    operatorRadioButtonId = view.asInstanceOf[RadioButton].getId()
   }
 
   private def phoneNumber() = find[EditText](R.id.edit_phone_number).getText().toString()
   private def password() = find[EditText](R.id.edit_password).getText().toString()
-  private def operator() = {
-    Settings.OPERATORS.MTS // TODO
+
+  private def operator() = operatorRadioButtonId match {
+    case R.id.radio_megafon => Settings.OPERATORS.MEGAFON
+    case R.id.radio_mts => Settings.OPERATORS.MTS
+    case R.id.radio_beeline => Settings.OPERATORS.BEELINE
+    case R.id.radio_tele2 => Settings.OPERATORS.TELE2
   }
 
 }

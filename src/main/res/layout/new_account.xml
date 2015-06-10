@@ -30,22 +30,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/megafon"
-            android:onClick="onMnoClicked"/>
+            android:onClick="onOperatorClick"/>
         <RadioButton android:id="@+id/radio_mts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mts"
-            android:onClick="onMnoClicked"/>
+            android:onClick="onOperatorClick"/>
         <RadioButton android:id="@+id/radio_beeline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/beeline"
-            android:onClick="onMnoClicked"/>
+            android:onClick="onOperatorClick"/>
         <RadioButton android:id="@+id/radio_tele2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tele2"
-            android:onClick="onMnoClicked"/>
+            android:onClick="onOperatorClick"/>
     </RadioGroup>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

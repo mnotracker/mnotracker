@@ -7,8 +7,11 @@ import com.github.mnotracker.{R, TypedFindView}
 class MainActivity extends FragmentActivity with TypedFindView with ActivityUtils {
 
   import android.os.Bundle
+  import android.support.v4.view.ViewPager
 
   import com.github.mnotracker.Logs.logd
+
+  private lazy val pager = find[ViewPager](R.id.pager)
 
   override def onCreate(bundle: Bundle) = {
     logd("MainActivity.onCreate")
@@ -17,6 +20,10 @@ class MainActivity extends FragmentActivity with TypedFindView with ActivityUtil
     setContentView(R.layout.main)
     createTabs()
 
+    if (MainActivity.needRestoreToTab()) {
+      pager setCurrentItem MainActivity.settingsTab
+      MainActivity.resetRestoreToTab()
+    }
     /*{
       import scala.concurrent.Future
       import scala.concurrent.ExecutionContext.Implicits.global
@@ -36,10 +43,19 @@ class MainActivity extends FragmentActivity with TypedFindView with ActivityUtil
   }
 
   private def createTabs() = {
-    import android.support.v4.view.ViewPager
-
     val adapter = new MainPagerAdapter(getSupportFragmentManager(), this)
-    find[ViewPager](R.id.pager) setAdapter adapter
+    pager setAdapter adapter
   }
+
+}
+
+object MainActivity {
+
+  val (noneTab, servicesTab, settingsTab, aboutTab) = (-1, 0, 1, 2)
+  private var restoreToTab = noneTab
+
+  def restoreTo(tab: Int) = restoreToTab = tab
+  def resetRestoreToTab() = restoreToTab = noneTab
+  def needRestoreToTab() = restoreToTab != noneTab
 
 }

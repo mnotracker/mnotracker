@@ -23,8 +23,8 @@ object Settings {
   val ENABLED = "enabled"
 
   object OPERATORS {
-    val MTS = "mts"
     val MEGAFON = "megafon"
+    val MTS = "mts"
     val BEELINE = "beeline"
     val TELE2 = "tele2"
   }
@@ -55,8 +55,14 @@ object Settings {
 
   def accounts()(implicit ctx: Context) = getStringSet(ACCOUNTS)
   def isAccountEnabled(account: String)(implicit ctx: Context) = accountObject(account).getBoolean(ENABLED)
-  def accountOperator(account: String)(implicit ctx: Context) = accountObject(account).getString(OPERATOR)
   def accountPassword(account: String)(implicit ctx: Context) = accountObject(account).getString(PASSWORD)
+  def accountOperator(account: String)(implicit ctx: Context) = accountObject(account).getString(OPERATOR)
+  def accountOperatorText(account: String)(implicit ctx: Context) = accountOperator(account) match {
+    case Settings.OPERATORS.MEGAFON => ctx.getString(R.string.megafon)
+    case Settings.OPERATORS.MTS => ctx.getString(R.string.mts)
+    case Settings.OPERATORS.BEELINE => ctx.getString(R.string.beeline)
+    case Settings.OPERATORS.TELE2 => ctx.getString(R.string.tele2)
+  }
 
   private def accountObject(account: String)(implicit ctx: Context) = new JSONObject(sharedPreferences().getString(account, ""))
 
