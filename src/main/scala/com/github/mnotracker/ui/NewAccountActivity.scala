@@ -22,6 +22,16 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
     super.onCreate(bundle)
     setContentView(R.layout.new_account)
 
+    prepareButtons()
+    prepareRadioButtons()
+  }
+
+  def onOperatorClick(view: View) = {
+    logd("NewAccountActivity.onOperatorClick")
+    operatorRadioButtonId = view.asInstanceOf[RadioButton].getId()
+  }
+
+  private def prepareButtons() = {
     setButtonHandler(
       find[Button](R.id.button_login),
       () => {
@@ -36,15 +46,12 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
         restartApplication(this, Tab.Settings)
       }
     )
+  }
 
+  private def prepareRadioButtons() = {
     val radioMegafon = find[RadioButton](R.id.radio_megafon)
     radioMegafon setChecked true
     onOperatorClick(radioMegafon)
-  }
-
-  def onOperatorClick(view: View) = {
-    logd("NewAccountActivity.onOperatorClick")
-    operatorRadioButtonId = view.asInstanceOf[RadioButton].getId()
   }
 
   private def phoneNumber() = find[EditText](R.id.edit_phone_number).getText().toString()

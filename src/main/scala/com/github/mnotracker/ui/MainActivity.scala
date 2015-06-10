@@ -69,7 +69,7 @@ object MainActivity {
 
   import Tab._
 
-  var mainActivity: MainActivity = null
+  private var mainActivity: MainActivity = null
 
   def restartApplication(currentActivity: Activity, tab: Tab)(implicit ctx: Context) = {
     import android.content.Intent
