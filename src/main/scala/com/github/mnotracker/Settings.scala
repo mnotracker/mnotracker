@@ -50,7 +50,7 @@ object Settings {
       .putStringSet(ACCOUNTS, getStringSet(ACCOUNTS) ++ Set(phoneNumber))
       .commit()
 
-    logd("accounts commit" + (if (success) "OK" else "FAILED"))
+    logd("accounts commit " + (if (success) "OK" else "FAILED"))
   }
 
   def accounts()(implicit ctx: Context) = getStringSet(ACCOUNTS)
@@ -72,9 +72,9 @@ object Settings {
   private def getString(key: String, default: String)(implicit ctx: Context) = sharedPreferences().getString(key, default)
 
   private def getStringSet(key: String, default: Set[String] = Set[String]())(implicit ctx: Context): Set[String] = {
-      val javaSet = sharedPreferences().getStringSet(key, setAsJavaSet(default))
-      val mutableSet = asScalaSet(javaSet)
-      mutableSet.toSet
-    }
+    val javaSet = sharedPreferences().getStringSet(key, setAsJavaSet(default))
+    val mutableSet = asScalaSet(javaSet)
+    mutableSet.toSet
+  }
 
 }

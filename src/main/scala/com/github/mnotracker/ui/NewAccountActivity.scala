@@ -25,13 +25,15 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
     setButtonHandler(
       find[Button](R.id.button_login),
       () => {
+        import MainActivity._
+
         Settings.addAccount(
           phoneNumber = phoneNumber(),
           password = password(),
           operator = operator()
         )
-        SettingsFragment.dirtyAccounts = true
-        finish()
+
+        restartApplication(this, Tab.Settings)
       }
     )
 

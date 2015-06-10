@@ -20,5 +20,7 @@ class AboutFragment extends Fragment {
 }
 
 object AboutFragment {
+
   val titleStringId: Int = R.string.about
+
 }

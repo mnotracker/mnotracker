@@ -20,5 +20,7 @@ class ServicesFragment extends Fragment {
 }
 
 object ServicesFragment {
+
   val titleStringId: Int = R.string.services
+
 }

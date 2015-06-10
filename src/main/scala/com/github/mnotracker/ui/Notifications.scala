@@ -50,4 +50,5 @@ object Notifications {
         case None => None
       }
     }
+
 }

@@ -28,12 +28,6 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
     logd("SettingsFragment.onResume")
     super.onResume()
 
-    if (SettingsFragment.dirtyAccounts) {
-      SettingsFragment.dirtyAccounts = false
-      MainActivity restoreTo MainActivity.settingsTab
-      restartApplication()
-    }
-
     getPreferenceManager()
       .getSharedPreferences()
       .registerOnSharedPreferenceChangeListener(this)
@@ -48,18 +42,8 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
   }
 
   override def onSharedPreferenceChanged(sharedPref: SharedPreferences, key: String) = key match {
-    case Settings.DARK_THEME_ON => restartApplication()
+    case Settings.DARK_THEME_ON => MainActivity.restartApplication(getActivity(), MainActivity.Tab.Settings)
     case _ => // TODO
-  }
-
-  private def restartApplication() = {
-    import android.content.Intent
-
-    logd("SettingsFragment.restartApplication")
-    val activity = getActivity()
-    val intent = new Intent(activity, classOf[MainActivity])
-    activity.finish()
-    startActivity(intent)
   }
 
   private def addAccounts() = {
@@ -87,6 +71,7 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
 }
 
 object SettingsFragment {
+
   val titleStringId: Int = R.string.settings
-  var dirtyAccounts = false
+
 }
