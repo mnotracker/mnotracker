@@ -49,6 +49,10 @@
             android:text="@string/tele2"
             android:onClick="onOperatorClick"/>
     </RadioGroup>
+    <Switch
+        android:id="@+id/switch_account_enable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"

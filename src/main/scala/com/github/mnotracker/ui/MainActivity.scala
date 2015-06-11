@@ -24,7 +24,7 @@ class MainActivity extends FragmentActivity with TypedFindView with ActivityUtil
 
     setContentView(R.layout.main)
     createTabs()
-    restoreTab()
+    maybeRestoreTab()
   }
 
   override def onResume() = {
@@ -45,7 +45,7 @@ class MainActivity extends FragmentActivity with TypedFindView with ActivityUtil
     pager setAdapter adapter
   }
 
-  private def restoreTab() = Try {
+  private def maybeRestoreTab() = Try {
     logd(s"restoreTab extras=${getIntent().getExtras()}")
     val tabId = getIntent()
       .getExtras()

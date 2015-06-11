@@ -1,15 +1,17 @@
 package com.github.mnotracker.ui
 
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.preference.Preference.OnPreferenceClickListener
 import android.support.v4.preference.PreferenceFragment
 
 import com.github.mnotracker.{R, Settings}
 
-class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeListener {
+class SettingsFragment extends PreferenceFragment
+                       with OnSharedPreferenceChangeListener with OnPreferenceClickListener {
 
-  import android.content.{Context, SharedPreferences}
+  import android.content.{Context, Intent, SharedPreferences}
   import android.os.Bundle
-  import android.preference.{Preference, PreferenceCategory, SwitchPreference}
+  import android.preference.{Preference, PreferenceCategory}
   import android.view.LayoutInflater
   import android.view.ViewGroup
 
@@ -46,6 +48,15 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
     case _ => // TODO
   }
 
+  override def onPreferenceClick(pref: Preference): Boolean = {
+    val phoneNumber = pref.getKey()
+    logd(s"SettingsFragment.onPreferenceClick '$phoneNumber'")
+    val intent = new Intent(getActivity(), classOf[NewAccountActivity])
+    intent.putExtra(NewAccountActivity.PHONE_NUMBER, phoneNumber)
+    getActivity().startActivity(intent)
+    true
+  }
+
   private def addAccounts() = {
     val category = accountsCategory()
     for {
@@ -58,6 +69,7 @@ class SettingsFragment extends PreferenceFragment with OnSharedPreferenceChangeL
       val pref = new Preference(getActivity())
       pref.setKey(phoneNumber)
       pref.setTitle(title)
+      pref.setOnPreferenceClickListener(this)
       if (!enabled) {
         pref.setSummary(getString(R.string.off))
       }
