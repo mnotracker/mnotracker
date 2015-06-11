@@ -18,7 +18,7 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
   override def onCreate(bundle: Bundle) = {
     logd("AccountActivity.onCreate")
     super.onCreate(bundle)
-    setContentView(R.layout.new_account)
+    setContentView(R.layout.account)
 
     maybeLoadAccountData()
     prepareButtons()

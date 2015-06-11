@@ -20,7 +20,6 @@
 
         <activity
             android:name=".ui.MainActivity"
-            android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             android:launchMode="singleTop">
@@ -39,7 +38,6 @@
 
         <activity
             android:name=".ui.AccountActivity"
-            android:label="@string/new_account"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
