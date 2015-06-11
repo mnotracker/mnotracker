@@ -21,7 +21,7 @@ trait ActivityUtils <: Activity {
   def setButtonHandler(button: Button, handler: () => Unit) =
     button setOnClickListener {
       new View.OnClickListener() {
-        override def onClick(v: View) = { handler() }
+        override def onClick(v: View) = handler()
       }
     }
 

@@ -10,7 +10,7 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
   import android.view.View
   import android.widget.{Button, EditText, RadioButton, RadioGroup, Switch}
 
-  import com.github.mnotracker.Logs.logd
+  import com.github.mnotracker.Logs.{logd, loge}
   import com.github.mnotracker.Settings
 
   import scala.util.Try
@@ -32,17 +32,21 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
 
   def onOperatorClick(view: View) = update()
 
-  private def maybeLoadAccountData() = Try {
-    logd(s"maybeLoadAccountData extras=${getIntent().getExtras()}")
-    val phoneNumber = getIntent()
+  lazy val phoneNumberExtra: Option[String] = Try {
+    val value = getIntent()
       .getExtras()
       .getString(AccountActivity.PHONE_NUMBER, "")
-    loadAccountData(phoneNumber)
-    logd("maybeLoadAccountData success")
-  } getOrElse {
-    logd("new account")
-    find[Switch](R.id.switch_account_enable) setVisibility View.INVISIBLE
-    find[Button](R.id.button_delete) setVisibility View.INVISIBLE
+    if (value.isEmpty) throw new NoSuchElementException
+    else value
+  }.toOption
+
+  private def maybeLoadAccountData() = phoneNumberExtra match {
+    case Some(phoneNumber) =>
+      loadAccountData(phoneNumber)
+      logd("maybeLoadAccountData success")
+    case None =>
+      logd("new account")
+      find[Switch](R.id.switch_account_enable) setVisibility View.INVISIBLE
   }
 
   private def loadAccountData(phoneNumber: String) = {
@@ -53,35 +57,61 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
     find[EditText](R.id.edit_password) setText Settings.accountPassword(phoneNumber)
     find[RadioGroup](R.id.radio_group_operators) check operatorStringToRadioId(Settings.accountOperator(phoneNumber))
     find[Switch](R.id.switch_account_enable) setChecked Settings.isAccountEnabled(phoneNumber)
-    find[Button](R.id.button_login) setText R.string.apply
   }
 
   private def prepareButtons() = {
     setButtonHandler(
       find[Button](R.id.button_login),
       () => {
-        import MainActivity.{restartApplication, Tab}
-
-        Settings.addAccount(
+        val added = Settings.addAccount(
           phoneNumber = phoneNumber(),
           password = password(),
           operator = operator(),
           enabled = enabled()
         )
 
-        restartApplication(Some(this), Tab.Settings)
-
-        // TODO: start login process
+        if (added) {
+          // TODO: toast
+          MainActivity.restartApplication(Some(this), MainActivity.Tab.Settings)
+          // TODO: start login process
+        } else {
+          loge("failed to create account")
+        }
       }
     )
 
-    setButtonHandler(
-      find[Button](R.id.button_delete),
-      () => {
-        // TODO: show account delete confirmation dialog
-        logd("delete pressed")
-      }
-    )
+    phoneNumberExtra match {
+      case Some(phoneNumber) =>
+        find[Button](R.id.button_login) setText R.string.apply
+        setDeleteButtonHandler(phoneNumber)
+      case None =>
+        find[Button](R.id.button_delete) setVisibility View.INVISIBLE
+    }
+
+    def setDeleteButtonHandler(phoneNumber: String) =
+      setButtonHandler(
+        find[Button](R.id.button_delete),
+        () => {
+          logd("delete pressed")
+          implicit val activity: Activity = this
+          AlertDialogFragment(
+            getString(R.string.delete_account_confirmation).format(phoneNumber),
+            Vector(
+              (getString(R.string.yes), () => {
+                logd("removing account")
+                val deleted = Settings.deleteAccount(phoneNumber)
+                if (deleted) {
+                  // TODO: toast
+                  MainActivity.restartApplication(Some(this), MainActivity.Tab.Settings)
+                } else {
+                  loge("failed to create account")
+                }
+              }),
+              (getString(R.string.no), () => ())
+            )
+          )
+        }
+      )
   }
 
   private def phoneNumber() = find[EditText](R.id.edit_phone_number).getText().toString()

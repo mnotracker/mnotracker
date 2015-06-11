@@ -34,7 +34,7 @@ object Settings {
   def onlyViaWifi()(implicit ctx: Context) = getBoolean(ONLY_VIA_WIFI, false)
   def telemetryOn()(implicit ctx: Context) = getBoolean(TELEMETRY_ON, true)
 
-  def addAccount(phoneNumber: String, password: String, operator: String, enabled: Boolean)(implicit ctx: Context): Unit = {
+  def addAccount(phoneNumber: String, password: String, operator: String, enabled: Boolean)(implicit ctx: Context): Boolean = {
     logd(s"addAccount '$phoneNumber' '$password' '$operator' '$enabled'")
 
     val jsonArray = new JSONObject()
@@ -47,18 +47,24 @@ object Settings {
     val success = sharedPreferences()
       .edit()
       .putString(phoneNumber, jsonArray.toString())
-      .putStringSet(ACCOUNTS, getStringSet(ACCOUNTS) ++ Set(phoneNumber))
+      .putStringSet(ACCOUNTS, getStringSet(ACCOUNTS) + phoneNumber)
       .commit()
 
-    logd("accounts commit " + (if (success) "OK" else "FAILED"))
+    success
   }
 
+  def deleteAccount(phoneNumber: String)(implicit ctx: Context): Boolean = sharedPreferences()
+    .edit()
+    .remove(phoneNumber)
+    .putStringSet(ACCOUNTS, getStringSet(ACCOUNTS) - phoneNumber)
+    .commit()
+
   def accounts()(implicit ctx: Context) = getStringSet(ACCOUNTS)
-  def isAccountEnabled(account: String)(implicit ctx: Context) = accountObject(account).getBoolean(ENABLED)
-  def accountPassword(account: String)(implicit ctx: Context) = accountObject(account).getString(PASSWORD)
-  def accountOperator(account: String)(implicit ctx: Context) = accountObject(account).getString(OPERATOR)
-  def accountOperatorText(account: String)(implicit ctx: Context) = ctx.getString(
-    accountOperator(account) match {
+  def isAccountEnabled(phoneNumber: String)(implicit ctx: Context) = accountObject(phoneNumber).getBoolean(ENABLED)
+  def accountPassword(phoneNumber: String)(implicit ctx: Context) = accountObject(phoneNumber).getString(PASSWORD)
+  def accountOperator(phoneNumber: String)(implicit ctx: Context) = accountObject(phoneNumber).getString(OPERATOR)
+  def accountOperatorText(phoneNumber: String)(implicit ctx: Context) = ctx.getString(
+    accountOperator(phoneNumber) match {
       case Settings.OPERATORS.MEGAFON => R.string.megafon
       case Settings.OPERATORS.MTS => R.string.mts
       case Settings.OPERATORS.BEELINE => R.string.beeline
@@ -66,7 +72,7 @@ object Settings {
     }
   )
 
-  private def accountObject(account: String)(implicit ctx: Context) = new JSONObject(sharedPreferences().getString(account, ""))
+  private def accountObject(phoneNumber: String)(implicit ctx: Context) = new JSONObject(sharedPreferences().getString(phoneNumber, ""))
 
   private def sharedPreferences()(implicit ctx: Context) = PreferenceManager.getDefaultSharedPreferences(ctx)
 

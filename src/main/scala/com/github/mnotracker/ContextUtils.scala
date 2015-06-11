@@ -23,7 +23,7 @@ object ContextUtils {
     else
       handler post {
         new Runnable() {
-          override def run() = { f }
+          override def run() = f
         }
       }
 
