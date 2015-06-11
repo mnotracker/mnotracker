@@ -57,12 +57,14 @@ object Settings {
   def isAccountEnabled(account: String)(implicit ctx: Context) = accountObject(account).getBoolean(ENABLED)
   def accountPassword(account: String)(implicit ctx: Context) = accountObject(account).getString(PASSWORD)
   def accountOperator(account: String)(implicit ctx: Context) = accountObject(account).getString(OPERATOR)
-  def accountOperatorText(account: String)(implicit ctx: Context) = accountOperator(account) match {
-    case Settings.OPERATORS.MEGAFON => ctx.getString(R.string.megafon)
-    case Settings.OPERATORS.MTS => ctx.getString(R.string.mts)
-    case Settings.OPERATORS.BEELINE => ctx.getString(R.string.beeline)
-    case Settings.OPERATORS.TELE2 => ctx.getString(R.string.tele2)
-  }
+  def accountOperatorText(account: String)(implicit ctx: Context) = ctx.getString(
+    accountOperator(account) match {
+      case Settings.OPERATORS.MEGAFON => R.string.megafon
+      case Settings.OPERATORS.MTS => R.string.mts
+      case Settings.OPERATORS.BEELINE => R.string.beeline
+      case Settings.OPERATORS.TELE2 => R.string.tele2
+    }
+  )
 
   private def accountObject(account: String)(implicit ctx: Context) = new JSONObject(sharedPreferences().getString(account, ""))
 
