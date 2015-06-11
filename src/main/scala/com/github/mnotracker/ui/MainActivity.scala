@@ -14,15 +14,13 @@ class MainActivity extends FragmentActivity with TypedFindView with ActivityUtil
   import android.os.Bundle
   import android.support.v4.view.ViewPager
 
-  import MainActivity._
-
   private lazy val pager = find[ViewPager](R.id.pager)
 
   override def onCreate(bundle: Bundle) = {
     logd("MainActivity.onCreate")
     super.onCreate(bundle)
 
-    mainActivity = this
+    MainActivity.mainActivity = Some(this)
 
     setContentView(R.layout.main)
     createTabs()
@@ -38,7 +36,7 @@ class MainActivity extends FragmentActivity with TypedFindView with ActivityUtil
 
   override def onDestroy() = {
     logd("MainActivity.onDestroy")
-    mainActivity = null
+    MainActivity.mainActivity = None
     super.onDestroy()
   }
 
@@ -51,7 +49,7 @@ class MainActivity extends FragmentActivity with TypedFindView with ActivityUtil
     logd(s"restoreTab extras=${getIntent().getExtras()}")
     val tabId = getIntent()
       .getExtras()
-      .getInt(TAB, Tab.Services.id)
+      .getInt(MainActivity.TAB, MainActivity.Tab.Services.id)
     pager setCurrentItem tabId
     logd("restoreTab success")
   }
@@ -67,11 +65,9 @@ object MainActivity {
     val Services, Settings, About = Value
   }
 
-  import Tab._
+  private var mainActivity: Option[MainActivity] = None
 
-  private var mainActivity: MainActivity = null
-
-  def restartApplication(currentActivity: Activity, tab: Tab)(implicit ctx: Context) = {
+  def restartApplication(currentActivity: Option[Activity], tab: Tab.Tab)(implicit ctx: Context) = {
     import android.content.Intent
 
     logd(s"MainActivity.restartApplication mainActivity=$mainActivity")
@@ -79,8 +75,8 @@ object MainActivity {
     val intent = new Intent(appContext, classOf[MainActivity])
     intent.putExtra(TAB, tab.id)
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    Try { currentActivity.finish() }
-    Try { mainActivity.finish() }
+    currentActivity foreach { _.finish() }
+    mainActivity foreach { _.finish() }
     appContext.startActivity(intent)
   }
 

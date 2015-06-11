@@ -25,11 +25,13 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/radio_group_operators">
         <RadioButton android:id="@+id/radio_megafon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/megafon"
+            android:checked="true"
             android:onClick="onOperatorClick"/>
         <RadioButton android:id="@+id/radio_mts"
             android:layout_width="wrap_content"

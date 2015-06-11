@@ -9,13 +9,12 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
   import android.os.Bundle
   import android.view.View
   import android.widget.Button
-  import android.widget.RadioButton
   import android.widget.EditText
+  import android.widget.RadioButton
+  import android.widget.RadioGroup
 
   import com.github.mnotracker.Logs.logd
   import com.github.mnotracker.Settings
-
-  private var operatorRadioButtonId = -1
 
   override def onCreate(bundle: Bundle) = {
     logd("NewAccountActivity.onCreate")
@@ -23,19 +22,21 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
     setContentView(R.layout.new_account)
 
     prepareButtons()
-    prepareRadioButtons()
+    update()
   }
 
-  def onOperatorClick(view: View) = {
-    logd("NewAccountActivity.onOperatorClick")
-    operatorRadioButtonId = view.asInstanceOf[RadioButton].getId()
+  def update() = {
+    logd("NewAccountActivity.update")
+    // TODO: validation checks
   }
+
+  def onOperatorClick(view: View) = update()
 
   private def prepareButtons() = {
     setButtonHandler(
       find[Button](R.id.button_login),
       () => {
-        import MainActivity._
+        import MainActivity.{restartApplication, Tab}
 
         Settings.addAccount(
           phoneNumber = phoneNumber(),
@@ -43,21 +44,15 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
           operator = operator()
         )
 
-        restartApplication(this, Tab.Settings)
+        restartApplication(Some(this), Tab.Settings)
       }
     )
-  }
-
-  private def prepareRadioButtons() = {
-    val radioMegafon = find[RadioButton](R.id.radio_megafon)
-    radioMegafon setChecked true
-    onOperatorClick(radioMegafon)
   }
 
   private def phoneNumber() = find[EditText](R.id.edit_phone_number).getText().toString()
   private def password() = find[EditText](R.id.edit_password).getText().toString()
 
-  private def operator() = operatorRadioButtonId match {
+  private def operator() = find[RadioGroup](R.id.radio_group_operators).getCheckedRadioButtonId() match {
     case R.id.radio_megafon => Settings.OPERATORS.MEGAFON
     case R.id.radio_mts => Settings.OPERATORS.MTS
     case R.id.radio_beeline => Settings.OPERATORS.BEELINE
