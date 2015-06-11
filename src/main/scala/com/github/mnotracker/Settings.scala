@@ -34,13 +34,13 @@ object Settings {
   def onlyViaWifi()(implicit ctx: Context) = getBoolean(ONLY_VIA_WIFI, false)
   def telemetryOn()(implicit ctx: Context) = getBoolean(TELEMETRY_ON, true)
 
-  def addAccount(phoneNumber: String, password: String, operator: String)(implicit ctx: Context): Unit = {
-    logd(s"addAccount '$phoneNumber' '$password' '$operator'")
+  def addAccount(phoneNumber: String, password: String, operator: String, enabled: Boolean)(implicit ctx: Context): Unit = {
+    logd(s"addAccount '$phoneNumber' '$password' '$operator' '$enabled'")
 
     val jsonArray = new JSONObject()
       .put(PASSWORD, password)
       .put(OPERATOR, operator)
-      .put(ENABLED, true)
+      .put(ENABLED, enabled)
       //.put(STATE, )
       //.put(LAST_DATA_FETCH, )
 

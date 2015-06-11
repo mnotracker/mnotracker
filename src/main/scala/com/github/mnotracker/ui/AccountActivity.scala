@@ -27,7 +27,7 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
 
   def update() = {
     logd("AccountActivity.update")
-    // TODO: validation checks
+    // TODO: validation checks: phone number already exists, no password...
   }
 
   def onOperatorClick(view: View) = update()
@@ -52,6 +52,7 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
     find[EditText](R.id.edit_password) setText Settings.accountPassword(phoneNumber)
     find[RadioGroup](R.id.radio_group_operators) check operatorStringToRadioId(Settings.accountOperator(phoneNumber))
     find[Switch](R.id.switch_account_enable) setChecked Settings.isAccountEnabled(phoneNumber)
+    find[Button](R.id.button_login) setText R.string.apply
     find[Button](R.id.button_signup) setVisibility View.INVISIBLE
   }
 
@@ -64,7 +65,8 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
         Settings.addAccount(
           phoneNumber = phoneNumber(),
           password = password(),
-          operator = operator()
+          operator = operator(),
+          enabled = enabled()
         )
 
         restartApplication(Some(this), Tab.Settings)
@@ -80,6 +82,8 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
   private def operator() = operatorRadioIdToString(
     find[RadioGroup](R.id.radio_group_operators).getCheckedRadioButtonId()
   )
+
+  private def enabled() = find[Switch](R.id.switch_account_enable).isChecked()
 
   private def operatorRadioIdToString(id: Int): String = id match {
     case R.id.radio_megafon => Settings.OPERATORS.MEGAFON
