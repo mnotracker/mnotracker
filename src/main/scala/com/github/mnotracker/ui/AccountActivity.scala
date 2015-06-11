@@ -4,7 +4,7 @@ import android.app.Activity
 
 import com.github.mnotracker.{R, TypedFindView}
 
-class NewAccountActivity extends Activity with TypedFindView with ActivityUtils {
+class AccountActivity extends Activity with TypedFindView with ActivityUtils {
 
   import android.os.Bundle
   import android.view.View
@@ -16,7 +16,7 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
   import scala.util.Try
 
   override def onCreate(bundle: Bundle) = {
-    logd("NewAccountActivity.onCreate")
+    logd("AccountActivity.onCreate")
     super.onCreate(bundle)
     setContentView(R.layout.new_account)
 
@@ -26,7 +26,7 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
   }
 
   def update() = {
-    logd("NewAccountActivity.update")
+    logd("AccountActivity.update")
     // TODO: validation checks
   }
 
@@ -36,7 +36,7 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
     logd(s"maybeLoadAccountData extras=${getIntent().getExtras()}")
     val phoneNumber = getIntent()
       .getExtras()
-      .getString(NewAccountActivity.PHONE_NUMBER, "")
+      .getString(AccountActivity.PHONE_NUMBER, "")
     loadAccountData(phoneNumber)
     logd("maybeLoadAccountData success")
   } getOrElse {
@@ -97,7 +97,7 @@ class NewAccountActivity extends Activity with TypedFindView with ActivityUtils 
 
 }
 
-object NewAccountActivity {
+object AccountActivity {
 
   val PHONE_NUMBER = "phoneNumber"
 

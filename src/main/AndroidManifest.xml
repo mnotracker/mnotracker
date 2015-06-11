@@ -38,7 +38,7 @@
         </receiver>
 
         <activity
-            android:name=".ui.NewAccountActivity"
+            android:name=".ui.AccountActivity"
             android:label="@string/new_account"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">

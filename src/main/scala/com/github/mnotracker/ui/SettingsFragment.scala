@@ -51,8 +51,8 @@ class SettingsFragment extends PreferenceFragment
   override def onPreferenceClick(pref: Preference): Boolean = {
     val phoneNumber = pref.getKey()
     logd(s"SettingsFragment.onPreferenceClick '$phoneNumber'")
-    val intent = new Intent(getActivity(), classOf[NewAccountActivity])
-    intent.putExtra(NewAccountActivity.PHONE_NUMBER, phoneNumber)
+    val intent = new Intent(getActivity(), classOf[AccountActivity])
+    intent.putExtra(AccountActivity.PHONE_NUMBER, phoneNumber)
     getActivity().startActivity(intent)
     true
   }
