@@ -42,6 +42,7 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
   } getOrElse {
     logd("new account")
     find[Switch](R.id.switch_account_enable) setVisibility View.INVISIBLE
+    find[Button](R.id.button_delete) setVisibility View.INVISIBLE
   }
 
   private def loadAccountData(phoneNumber: String) = {
@@ -53,7 +54,6 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
     find[RadioGroup](R.id.radio_group_operators) check operatorStringToRadioId(Settings.accountOperator(phoneNumber))
     find[Switch](R.id.switch_account_enable) setChecked Settings.isAccountEnabled(phoneNumber)
     find[Button](R.id.button_login) setText R.string.apply
-    find[Button](R.id.button_signup) setVisibility View.INVISIBLE
   }
 
   private def prepareButtons() = {
@@ -72,6 +72,14 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
         restartApplication(Some(this), Tab.Settings)
 
         // TODO: start login process
+      }
+    )
+
+    setButtonHandler(
+      find[Button](R.id.button_delete),
+      () => {
+        // TODO: show account delete confirmation dialog
+        logd("delete pressed")
       }
     )
   }

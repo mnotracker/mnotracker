@@ -18,8 +18,8 @@
     <string name="off">Off</string>
     <string name="your_phone_number">Phone Number</string>
     <string name="your_password">Password</string>
-    <string name="signup">Sign Up</string>
-    <string name="login">Login</string>
+    <string name="login">Login / Sign Up</string>
+    <string name="delete">Delete</string>
     <string name="apply">Apply</string>
     <string name="megafon">MegaFon</string>
     <string name="mts">MTS</string>

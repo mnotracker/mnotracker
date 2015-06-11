@@ -69,12 +69,12 @@
             android:textSize="20dp"
             android:text="@string/login"/>
         <Button
-            android:id="@+id/button_signup"
+            android:id="@+id/button_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="20dp"
-            android:text="@string/signup"/>
+            android:text="@string/delete"/>
     </LinearLayout>
 </LinearLayout>
