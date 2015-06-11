@@ -4,7 +4,7 @@ import android.app.{Activity, Dialog, DialogFragment}
 
 import com.github.mnotracker.R
 
-class AlertDialogFragment(message: String, buttons: Vector[(String, () => Unit)])
+class AlertDialogFragment(message: String, buttons: (String, () => Unit)*)
                          (implicit activity: Activity)
 extends DialogFragment {
 
@@ -44,7 +44,7 @@ extends DialogFragment {
 
 object AlertDialogFragment {
 
-  def apply(message: String, buttons: Vector[(String, () => Unit)])(implicit activity: Activity): Unit =
-    new AlertDialogFragment(message, buttons) show (activity.getFragmentManager(), "")
+  def apply(message: String, buttons: (String, () => Unit)*)(implicit activity: Activity): Unit =
+    new AlertDialogFragment(message, buttons: _*) show (activity.getFragmentManager(), "")
 
 }

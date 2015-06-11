@@ -15,6 +15,8 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
 
   import scala.util.Try
 
+  implicit lazy val activity = this
+
   override def onCreate(bundle: Bundle) = {
     logd("AccountActivity.onCreate")
     super.onCreate(bundle)
@@ -60,24 +62,17 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
   }
 
   private def prepareButtons() = {
+
     setButtonHandler(
       find[Button](R.id.button_login),
-      () => {
-        val added = Settings.addAccount(
-          phoneNumber = phoneNumber(),
-          password = password(),
-          operator = operator(),
-          enabled = enabled()
-        )
-
-        if (added) {
+      () =>
+        if(Settings.addAccount(phoneNumber = phoneNumber(), password = password(), operator = operator(), enabled = enabled())) {
           // TODO: toast
           MainActivity.restartApplication(Some(this), MainActivity.Tab.Settings)
           // TODO: start login process
         } else {
           loge("failed to create account")
         }
-      }
     )
 
     phoneNumberExtra match {
@@ -88,30 +83,26 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
         find[Button](R.id.button_delete) setVisibility View.INVISIBLE
     }
 
-    def setDeleteButtonHandler(phoneNumber: String) =
-      setButtonHandler(
-        find[Button](R.id.button_delete),
-        () => {
-          logd("delete pressed")
-          implicit val activity: Activity = this
-          AlertDialogFragment(
-            getString(R.string.delete_account_confirmation).format(phoneNumber),
-            Vector(
-              (getString(R.string.yes), () => {
-                logd("removing account")
-                val deleted = Settings.deleteAccount(phoneNumber)
-                if (deleted) {
-                  // TODO: toast
-                  MainActivity.restartApplication(Some(this), MainActivity.Tab.Settings)
-                } else {
-                  loge("failed to create account")
-                }
-              }),
-              (getString(R.string.no), () => ())
-            )
-          )
-        }
+    def setDeleteButtonHandler(phoneNumber: String) = {
+      val button = find[Button](R.id.button_delete)
+      val message = getString(R.string.delete_account_confirmation).format(phoneNumber)
+      val (yes, no) = (getString(R.string.yes), getString(R.string.no))
+      setButtonHandler(button,
+        () => AlertDialogFragment(
+          message,
+          (yes, () =>
+            if (Settings.deleteAccount(phoneNumber)) {
+              // TODO: toast
+              MainActivity.restartApplication(Some(this), MainActivity.Tab.Settings)
+            } else {
+              loge("failed to delete account")
+            }
+          ),
+          (no, () => ())
+        )
       )
+    }
+
   }
 
   private def phoneNumber() = find[EditText](R.id.edit_phone_number).getText().toString()
