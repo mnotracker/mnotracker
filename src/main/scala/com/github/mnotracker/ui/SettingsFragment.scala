@@ -78,7 +78,7 @@ class SettingsFragment extends PreferenceFragment
   }
 
   private def accountsCategory() = findPref[PreferenceCategory]("accounts_category")
-  private def findPref[P <: Preference](key: String): P = findPreference(key).asInstanceOf[P]
+  private def findPref[P <: Preference](key: String): P = findPreference(key).asInstanceOf[P]  // scalastyle:ignore
 
 }
 

@@ -31,7 +31,7 @@ object Notifications {
         .setContentText(text)
         .setContentIntent(pintent)
         .setSmallIcon(R.drawable.ic_launcher)
-        //.setLargeIcon(aBitmap) // TODO
+        // .setLargeIcon(aBitmap) // TODO
 
       val notif: Notification = nb.build()
       notif.flags |= Notification.FLAG_AUTO_CANCEL
@@ -40,7 +40,7 @@ object Notifications {
       case ex: Throwable => loge(s"failed to notify ${ex.getMessage}")
     }
 
-    //def cancel(context: Context)(id: Int) = notificationManager(context).foreach { _.cancel(id) }
+    // def cancel(context: Context)(id: Int) = notificationManager(context).foreach { _.cancel(id) }
     def cancelAll(context: Context) = notificationManager(context).foreach { _.cancelAll() }
 
     private def notificationManager(context: Context): Option[NotificationManager] = {

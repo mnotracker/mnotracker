@@ -41,8 +41,8 @@ object Settings {
       .put(PASSWORD, password)
       .put(OPERATOR, operator)
       .put(ENABLED, enabled)
-      //.put(STATE, )
-      //.put(LAST_DATA_FETCH, )
+      // .put(STATE, )
+      // .put(LAST_DATA_FETCH, )
 
     val success = sharedPreferences()
       .edit()

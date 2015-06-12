@@ -16,7 +16,7 @@ trait ActivityUtils <: Activity {
     super.onCreate(bundle)
   }
 
-  def find[V <: View](id: Int): V = findViewById(id).asInstanceOf[V]
+  def find[V <: View](id: Int): V = findViewById(id).asInstanceOf[V]  // scalastyle:ignore
 
   def setButtonHandler(button: Button, handler: () => Unit) =
     button setOnClickListener {

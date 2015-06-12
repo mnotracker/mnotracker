@@ -20,17 +20,10 @@ extends DialogFragment {
       .setMessage(message)
       .setCancelable(true)
 
-    buttons.size match {
-      case 0 => builder.setPositiveButton(R.string.ok, clickListener(() => ()))
-      case 1 => builder.setPositiveButton(buttons(0)._1, clickListener(buttons(0)._2))
-      case 2 =>
-        builder.setPositiveButton(buttons(0)._1, clickListener(buttons(0)._2))
-        builder.setNegativeButton(buttons(1)._1, clickListener(buttons(1)._2))
-      case 3 =>
-        builder.setPositiveButton(buttons(0)._1, clickListener(buttons(0)._2))
-        builder.setNegativeButton(buttons(1)._1, clickListener(buttons(1)._2))
-        builder.setNeutralButton(buttons(2)._1, clickListener(buttons(2)._2))
-    }
+    if (buttons.size == 0) builder.setPositiveButton(R.string.ok, clickListener(() => ()))
+    if (buttons.size >= 1) builder.setPositiveButton(buttons(0)._1, clickListener(buttons(0)._2))
+    if (buttons.size >= 2) builder.setNegativeButton(buttons(1)._1, clickListener(buttons(1)._2))
+    if (buttons.size >= 3) builder.setNeutralButton(buttons(2)._1, clickListener(buttons(2)._2))
 
     builder.create()
   }
