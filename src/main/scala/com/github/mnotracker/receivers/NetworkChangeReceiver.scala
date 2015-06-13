@@ -9,7 +9,7 @@ class NetworkChangeReceiver extends BroadcastReceiver {
 
   import com.github.mnotracker.Logs.logd
 
-  override def onReceive(context: Context, intent: Intent) = {
+  override def onReceive(context: Context, intent: Intent): Unit = {
     import com.github.mnotracker.ContextUtils
 
     implicit val ctx: Context = context

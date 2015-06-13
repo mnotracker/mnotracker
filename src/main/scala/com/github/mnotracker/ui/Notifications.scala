@@ -9,7 +9,7 @@ object Notifications {
 
   private val notificationId = 0
 
-  def notify(context: Context, text: String) =
+  def notify(context: Context, text: String): Unit =
     try {
       import android.app.Notification
       import android.app.PendingIntent
@@ -40,8 +40,8 @@ object Notifications {
       case ex: Throwable => loge(s"failed to notify ${ex.getMessage}")
     }
 
-    // def cancel(context: Context)(id: Int) = notificationManager(context).foreach { _.cancel(id) }
-    def cancelAll(context: Context) = notificationManager(context).foreach { _.cancelAll() }
+    // def cancel(context: Context)(id: Int): Unit = notificationManager(context).foreach { _.cancel(id) }
+    def cancelAll(context: Context): Unit = notificationManager(context).foreach { _.cancelAll() }
 
     private def notificationManager(context: Context): Option[NotificationManager] = {
       val service = context.getSystemService(Context.NOTIFICATION_SERVICE)

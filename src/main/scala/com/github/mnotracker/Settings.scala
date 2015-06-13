@@ -4,6 +4,7 @@ object Settings {
 
   import android.preference.PreferenceManager
   import android.content.Context
+  import android.content.SharedPreferences
 
   import com.github.mnotracker.Logs.{logd, loge}
 
@@ -29,10 +30,10 @@ object Settings {
     val TELE2 = "tele2"
   }
 
-  def onlyBadNews()(implicit ctx: Context) = getBoolean(ONLY_BAD_NEWS, true)
-  def darkThemeOn()(implicit ctx: Context) = getBoolean(DARK_THEME_ON, false)
-  def onlyViaWifi()(implicit ctx: Context) = getBoolean(ONLY_VIA_WIFI, false)
-  def telemetryOn()(implicit ctx: Context) = getBoolean(TELEMETRY_ON, true)
+  def onlyBadNews()(implicit ctx: Context): Boolean = getBoolean(ONLY_BAD_NEWS, true)
+  def darkThemeOn()(implicit ctx: Context): Boolean = getBoolean(DARK_THEME_ON, false)
+  def onlyViaWifi()(implicit ctx: Context): Boolean = getBoolean(ONLY_VIA_WIFI, false)
+  def telemetryOn()(implicit ctx: Context): Boolean = getBoolean(TELEMETRY_ON, true)
 
   def addAccount(phoneNumber: String, password: String, operator: String, enabled: Boolean)(implicit ctx: Context): Boolean = {
     logd(s"addAccount '$phoneNumber' '$password' '$operator' '$enabled'")
@@ -59,11 +60,11 @@ object Settings {
     .putStringSet(ACCOUNTS, getStringSet(ACCOUNTS) - phoneNumber)
     .commit()
 
-  def accounts()(implicit ctx: Context) = getStringSet(ACCOUNTS)
-  def isAccountEnabled(phoneNumber: String)(implicit ctx: Context) = accountObject(phoneNumber).getBoolean(ENABLED)
-  def accountPassword(phoneNumber: String)(implicit ctx: Context) = accountObject(phoneNumber).getString(PASSWORD)
-  def accountOperator(phoneNumber: String)(implicit ctx: Context) = accountObject(phoneNumber).getString(OPERATOR)
-  def accountOperatorText(phoneNumber: String)(implicit ctx: Context) = ctx.getString(
+  def accounts()(implicit ctx: Context): Set[String] = getStringSet(ACCOUNTS)
+  def isAccountEnabled(phoneNumber: String)(implicit ctx: Context): Boolean = accountObject(phoneNumber).getBoolean(ENABLED)
+  def accountPassword(phoneNumber: String)(implicit ctx: Context): String = accountObject(phoneNumber).getString(PASSWORD)
+  def accountOperator(phoneNumber: String)(implicit ctx: Context): String = accountObject(phoneNumber).getString(OPERATOR)
+  def accountOperatorText(phoneNumber: String)(implicit ctx: Context): String = ctx.getString(
     accountOperator(phoneNumber) match {
       case Settings.OPERATORS.MEGAFON => R.string.megafon
       case Settings.OPERATORS.MTS => R.string.mts
@@ -72,12 +73,12 @@ object Settings {
     }
   )
 
-  private def accountObject(phoneNumber: String)(implicit ctx: Context) = new JSONObject(sharedPreferences().getString(phoneNumber, ""))
+  private def accountObject(phoneNumber: String)(implicit ctx: Context): JSONObject = new JSONObject(sharedPreferences().getString(phoneNumber, ""))
 
-  private def sharedPreferences()(implicit ctx: Context) = PreferenceManager.getDefaultSharedPreferences(ctx)
+  private def sharedPreferences()(implicit ctx: Context): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
 
-  private def getBoolean(key: String, default: Boolean)(implicit ctx: Context) = sharedPreferences().getBoolean(key, default)
-  private def getString(key: String, default: String)(implicit ctx: Context) = sharedPreferences().getString(key, default)
+  private def getBoolean(key: String, default: Boolean)(implicit ctx: Context): Boolean = sharedPreferences().getBoolean(key, default)
+  private def getString(key: String, default: String)(implicit ctx: Context): String = sharedPreferences().getString(key, default)
 
   private def getStringSet(key: String, default: Set[String] = Set[String]())(implicit ctx: Context): Set[String] = {
     val javaSet = sharedPreferences().getStringSet(key, setAsJavaSet(default))

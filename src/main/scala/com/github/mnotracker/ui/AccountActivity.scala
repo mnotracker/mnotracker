@@ -17,7 +17,7 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
 
   implicit lazy val activity = this
 
-  override def onCreate(bundle: Bundle) = {
+  override def onCreate(bundle: Bundle): Unit = {
     logd("AccountActivity.onCreate")
     super.onCreate(bundle)
     setContentView(R.layout.account)
@@ -27,12 +27,12 @@ class AccountActivity extends Activity with TypedFindView with ActivityUtils {
     update()
   }
 
-  def update() = {
+  def update(): Unit = {
     logd("AccountActivity.update")
     // TODO: validation checks: phone number already exists, no password...
   }
 
-  def onOperatorClick(view: View) = update()
+  def onOperatorClick(view: View): Unit = update()
 
   lazy val phoneNumberExtra: Option[String] = Try {
     val value = getIntent()

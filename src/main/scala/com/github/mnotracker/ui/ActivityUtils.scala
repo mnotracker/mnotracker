@@ -11,14 +11,14 @@ trait ActivityUtils <: Activity {
 
   implicit val ctx: Context = this
 
-  override def onCreate(bundle: Bundle) = {
+  override def onCreate(bundle: Bundle): Unit = {
     updateTheme()
     super.onCreate(bundle)
   }
 
   def find[V <: View](id: Int): V = findViewById(id).asInstanceOf[V]  // scalastyle:ignore
 
-  def setButtonHandler(button: Button, handler: () => Unit) =
+  def setButtonHandler(button: Button, handler: () => Unit): Unit =
     button setOnClickListener {
       new View.OnClickListener() {
         override def onClick(v: View) = handler()

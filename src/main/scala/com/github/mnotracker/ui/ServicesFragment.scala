@@ -13,12 +13,12 @@ class ServicesFragment extends Fragment {
   import android.view.{LayoutInflater, View, ViewGroup}
 
   implicit lazy val ctx: Context = getActivity()
-  //lazy val client = new Tele2Client()
+  // lazy val client = new Tele2Client()
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     logd("ServicesFragment.onCreateView")
 
-    //client.startSync()
+    // client.startSync()
 
     inflater.inflate(R.layout.services, container, false)
   }

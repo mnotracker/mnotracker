@@ -11,7 +11,7 @@ abstract class MNOClient(implicit ctx: Context) extends WebView(ctx) {
 
   val JS_INTERFACE = "HTMLOUT"
 
-  def startSync()
+  def startSync(): Unit
 
   lazy val wvClient = new WebViewClient() {
 

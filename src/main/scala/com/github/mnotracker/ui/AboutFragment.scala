@@ -7,12 +7,11 @@ import com.github.mnotracker.R
 class AboutFragment extends Fragment {
 
   import android.os.Bundle
-  import android.view.LayoutInflater
-  import android.view.ViewGroup
+  import android.view.{LayoutInflater, View, ViewGroup}
 
   import com.github.mnotracker.Logs.logd
 
-  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
+  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     logd("AboutFragment.onCreateView")
     inflater.inflate(R.layout.about, container, false)
   }
