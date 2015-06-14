@@ -21,8 +21,8 @@ class MainPagerAdapter(fm: FragmentManager, context: Context) extends FragmentPa
     (new AboutFragment, AboutFragment.titleStringId)
   )
 
-  override def getCount() = fragments.length
+  override def getCount(): Int = fragments.length
   override def getItem(position: Int): Fragment = fragments(position)._1
-  override def getPageTitle(position: Int) = getString(fragments(position)._2)
+  override def getPageTitle(position: Int): String = getString(fragments(position)._2)
 
 }

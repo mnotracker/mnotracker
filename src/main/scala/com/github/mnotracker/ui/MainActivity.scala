@@ -16,7 +16,7 @@ class MainActivity extends FragmentActivity with TypedFindView with ActivityUtil
 
   private lazy val pager = find[ViewPager](R.id.pager)
 
-  override def onCreate(bundle: Bundle) = {
+  override def onCreate(bundle: Bundle): Unit = {
     logd("MainActivity.onCreate")
     super.onCreate(bundle)
 
@@ -27,14 +27,14 @@ class MainActivity extends FragmentActivity with TypedFindView with ActivityUtil
     maybeRestoreTab()
   }
 
-  override def onResume() = {
+  override def onResume(): Unit = {
     logd("MainActivity.onResume")
     super.onResume()
 
     Notifications.cancelAll(this)
   }
 
-  override def onDestroy() = {
+  override def onDestroy(): Unit = {
     logd("MainActivity.onDestroy")
     MainActivity.mainActivity = None
     super.onDestroy()
@@ -67,7 +67,7 @@ object MainActivity {
 
   private var mainActivity: Option[MainActivity] = None
 
-  def restartApplication(currentActivity: Option[Activity], tab: Tab.Tab)(implicit ctx: Context) = {
+  def restartApplication(currentActivity: Option[Activity], tab: Tab.Tab)(implicit ctx: Context): Unit = {
     import android.content.Intent
 
     logd(s"MainActivity.restartApplication mainActivity=$mainActivity")

@@ -19,14 +19,14 @@ class SettingsFragment extends PreferenceFragment
 
   private implicit def ctx: Context = getActivity()
 
-  override def onCreate(savedInstanceState: Bundle) = {
+  override def onCreate(savedInstanceState: Bundle): Unit = {
     logd("SettingsFragment.onCreate")
     super.onCreate(savedInstanceState)
     addPreferencesFromResource(R.xml.preferences)
     addAccounts()
   }
 
-  override def onResume() = {
+  override def onResume(): Unit = {
     logd("SettingsFragment.onResume")
     super.onResume()
 
@@ -35,7 +35,7 @@ class SettingsFragment extends PreferenceFragment
       .registerOnSharedPreferenceChangeListener(this)
   }
 
-  override def onPause() = {
+  override def onPause(): Unit = {
     logd("SettingsFragment.onPause")
     super.onPause()
     getPreferenceManager()
@@ -43,7 +43,7 @@ class SettingsFragment extends PreferenceFragment
       .unregisterOnSharedPreferenceChangeListener(this)
   }
 
-  override def onSharedPreferenceChanged(sharedPref: SharedPreferences, key: String) = key match {
+  override def onSharedPreferenceChanged(sharedPref: SharedPreferences, key: String): Unit = key match {
     case Settings.DARK_THEME_ON => MainActivity.restartApplication(Some(getActivity()), MainActivity.Tab.Settings)
     case _ => // TODO
   }
