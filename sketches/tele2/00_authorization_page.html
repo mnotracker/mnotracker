@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10-flat.dtd">
+<html lang="en"><head><link href="/ssotele2/img/favicon.ico;jsessionid=F7C29A72598CCFE7B6348B808EABBE6D" rel="shortcut icon"/><meta charset="utf-8"/><meta content="" name="description"/><meta content="text/html; charset=UTF-8" http-equiv="content-type"/><meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/><meta content="must-revalidate" http-equiv="Cache-Control"/><meta content="max-age=0" http-equiv="Cache-Control"/><script src="/ssotele2/js/jquery.js;jsessionid=F7C29A72598CCFE7B6348B808EABBE6D">voidexpr</script><script src="/ssotele2/js/scripts.js;jsessionid=F7C29A72598CCFE7B6348B808EABBE6D">voidexpr</script><script src="/ssotele2/js/html5.js;jsessionid=F7C29A72598CCFE7B6348B808EABBE6D">voidexpr</script><script src="/ssotele2/js/web/Utils.js;jsessionid=F7C29A72598CCFE7B6348B808EABBE6D">voidexpr</script><script src="/ssotele2/js/infieldlabel.js;jsessionid=F7C29A72598CCFE7B6348B808EABBE6D">voidexpr</script><script src="/ssotele2/js/PreAuthUtils.js;jsessionid=F7C29A72598CCFE7B6348B808EABBE6D">voidexpr</script><link href="/ssotele2/css/reset.css;jsessionid=F7C29A72598CCFE7B6348B808EABBE6D" type="text/css" rel="stylesheet"/><link href="/ssotele2/css/style.css;jsessionid=F7C29A72598CCFE7B6348B808EABBE6D" type="text/css" rel="stylesheet"/><title>Вход в систему</title></head><body><div class="container"><div class="logo"><a href="http://tele2.ru/"><img height="36" width="95" alt="" src="/ssotele2/img/logo.png;jsessionid=F7C29A72598CCFE7B6348B808EABBE6D"/></a></div><section class="content"><div class="main-title">Вход в систему</div><form method="post" action="https://login.tele2.ru:443/ssotele2/wap/auth/submitLoginAndPassword"><div class="input-wrapper"><input id="pNumber" value="" name="pNumber" placeholder="Номер телефона" type="text"/></div><div class="input-wrapper"><input id="pass" name="password" placeholder="Пароль" type="password"/></div><div class="link small"><a href="https://login.tele2.ru:443/ssotele2/wap/restore/">Вспомнить или получить пароль</a></div><button type="submit" class="button"><span>Войти</span><ins class="hover"/></button></form><div class="link big reg"><a href="https://login.tele2.ru:443/ssotele2/wap/register/">Зарегистрироваться</a></div><div class="socials"><div>Войти с помощью другой учетной записи</div><ul><li><a href="http://oauth.vk.com/authorize?&amp;client_id=4312491&amp;redirect_uri=https://login.tele2.ru/ssotele2/wap/auth/social/vkontakte/closeAndAuth">æ</a></li><li><a href="https://www.facebook.com/dialog/oauth?response_type=code&amp;scope=email,user_birthday&amp;client_id=567649453332395&amp;redirect_uri=https://login.tele2.ru/ssotele2/wap/auth/social/facebook/closeAndAuth">ä</a></li><li><a href="https://accounts.google.com/o/oauth2/auth?response_type=code&amp;scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&amp;client_id=259256656458-3d43uq10neqrqb8i1q67hl5bld7tgp5e.apps.googleusercontent.com&amp;redirect_uri=https://login.tele2.ru/ssotele2/wap/auth/social/google/closeAndAuth">è</a></li><li><a href="http://www.odnoklassniki.ru/oauth/authorize?response_type=code&amp;client_id=1085841152&amp;redirect_uri=https://login.tele2.ru/ssotele2/wap/auth/social/odnoklassniki/closeAndAuth">é</a></li></ul><div class="clear"/></div><script>
+
+        function inIframe () {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+
+        function windowpop(url, width, height) {
+            var leftPosition, topPosition;
+            leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
+            topPosition = (window.screen.height / 2) - ((height / 2) + 50);
+            window.open(url, "OAuth", "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,location=no,directories=no");
+        }
+
+        var socialRefs = $(".socials a");
+        socialRefs.click(function(event) {
+            var ref = this.href;
+            if (inIframe()) {
+                event.preventDefault();
+                windowpop(ref, 700, 500);
+            }
+        });
+
+
+
+    </script></section><div class="bottom"></div><footer class="footer"><a class="right" href="https://login.tele2.ru:443/ssotele2/wap/ssoInfo/ssoTerms">Правовая информация</a><a class="left" href="https://login.tele2.ru:443/ssotele2/wap/ssoInfo">Справка</a><div class="clear"/></footer></div></body></html>
