@@ -5,7 +5,8 @@ import http.cookiejar
 import urllib
 import urllib.parse
 import urllib.request
-import sys
+import time
+import random
 import re
 import os
 from bs4 import BeautifulSoup
@@ -24,8 +25,17 @@ opener = urllib.request.build_opener(
 )
 opener.addheaders = [('User-agent', 'Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30')]
 
+def pause_at_least(seconds):
+    t = seconds + random.randint(0, 5)
+    print("waiting %d seconds" % t)
+    time.sleep(t)
+
 def read_file(filename):
-    return open(filename).read()
+    text = open(filename).read()
+    print()
+    print('"%s"' % filename)
+    print(text)
+    return text
 
 def maybe_strip(text):
     try: return text.strip()
@@ -46,6 +56,7 @@ def authorize(phone, password):
         return read_file('01_on_login_success.html')
     else:
         p('https://login.tele2.ru')
+        pause_at_least(5)
         return p('https://login.tele2.ru:443/ssotele2/wap/auth/submitLoginAndPassword', {'pNumber': phone, 'password': password})
 
 #def print_services_1(on_login_success_page):
@@ -59,9 +70,10 @@ def authorize(phone, password):
 
 def print_services_2():
     if SIMULATION:
-        return read_file('02_on_services_success_page.html')
+        return read_file('02_on_services_success.html')
     else:
+        pause_at_least(2)
         return p('https://my.tele2.ru/services')
 
-on_login_success_page = authorize()
+on_login_success_page = authorize(phone, password)
 on_services_success_page = print_services_2()
