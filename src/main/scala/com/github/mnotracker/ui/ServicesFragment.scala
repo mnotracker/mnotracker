@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 
 import com.github.mnotracker.Logs.logd
 import com.github.mnotracker.R
-import com.github.mnotracker.web.Tele2Client
+import com.github.mnotracker.clients.{MTSClient, Tele2Client}
 
 class ServicesFragment extends Fragment {
 
@@ -13,12 +13,12 @@ class ServicesFragment extends Fragment {
   import android.view.{LayoutInflater, View, ViewGroup}
 
   implicit lazy val ctx: Context = getActivity()
-  // lazy val client = new Tele2Client()
+  lazy val client = new MTSClient()
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     logd("ServicesFragment.onCreateView")
 
-    // client.startSync()
+    // client.openLoginPage()
 
     inflater.inflate(R.layout.services, container, false)
   }

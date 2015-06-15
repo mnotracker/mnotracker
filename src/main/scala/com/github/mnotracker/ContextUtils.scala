@@ -17,26 +17,33 @@ object ContextUtils {
 
   def getString(id: Int)(implicit ctx: Context): String = ctx.getString(id)
 
-  def runOnUIThread(f: => Unit): Unit =
-    if (uiThread == Thread.currentThread)
+  def runOnUIThread(f: => Unit, delay: Int = 0): Unit =
+    if (uiThread == Thread.currentThread) {
       f
-    else
-      handler post {
-        new Runnable() {
-          override def run() = f
-        }
+    } else {
+      val runnable = new Runnable() {
+        override def run() = f
       }
+      if (delay > 0) {
+        handler postDelayed (runnable, delay)
+      } else {
+        handler post runnable
+      }
+    }
 
-  def evalOnUIThread[T](f: => T): Future[T] =
+  def evalOnUIThread[T](f: => T, delay: Int = 0): Future[T] =
     if (uiThread == Thread.currentThread) {
       Future.fromTry(Try(f))
     } else {
       val p = Promise[T]()
-      handler.post(new Runnable() {
-        override def run() = {
-          p.complete(Try(f))
-        }
-      })
+      val runnable = new Runnable() {
+        override def run() = p.complete(Try(f))
+      }
+      if (delay > 0) {
+        handler postDelayed (runnable, delay)
+      } else {
+        handler post runnable
+      }
       p.future
     }
 

@@ -61,8 +61,8 @@ def authorize(phone, password):
 
 #def print_services_1(on_login_success_page):
 #    soap = BeautifulSoup(on_login_success_page)
-#    a = soap.findAll('a')
-#    url_text = map(lambda t: (t['href'], maybe_strip(t.string)), a)
+#    a_tags = soap.findAll('a')
+#    url_text = map(lambda t: (t['href'], maybe_strip(t.string)), a_tags)
 #    url_text = filter(lambda t: t[1].find('Личный кабинет Теле2') != -1, url_text)
 #    uri = tuple(url_text)[0][0]
 #    url = 'https://login.tele2.ru:443/' + uri
